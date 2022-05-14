@@ -4,7 +4,7 @@
 
 with
     tasks as (
-        select {{ dbt_utils.star(from=ref('int_timesheet_tasks')) }}
+        select {{ dbt_utils.star(from=ref("int_timesheet_tasks")) }}
         from {{ ref("int_timesheet_tasks") }}
     )
 select

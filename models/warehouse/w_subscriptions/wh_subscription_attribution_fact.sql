@@ -4,7 +4,7 @@
 
 with
     subscription_details as (
-        select {{ dbt_utils.star(from=ref('int_converter_subscription_revenue')) }}
+        select {{ dbt_utils.star(from=ref("int_converter_subscription_revenue")) }}
         from {{ ref("int_converter_subscription_revenue") }}
     ),
     converting_events as (

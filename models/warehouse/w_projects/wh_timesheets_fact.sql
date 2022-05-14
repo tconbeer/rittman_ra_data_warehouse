@@ -5,21 +5,11 @@ with
     {% if target.type == "bigquery" %}
     companies_dim as (
 
-        select
-            {{
-                dbt_utils.star(
-                          from = ref('wh_companies_dim')
-                        )
-            }}
+        select {{ dbt_utils.star(from=ref("wh_companies_dim")) }}
         from {{ ref("wh_companies_dim") }}
     ),
     contacts_dim as (
-        select
-            {{
-                dbt_utils.star(
-                          from = ref('wh_contacts_dim')
-                        )
-            }}
+        select {{ dbt_utils.star(from=ref("wh_contacts_dim")) }}
         from {{ ref("wh_contacts_dim") }}
     ),
     {% elif target.type == "snowflake" %}
@@ -33,37 +23,20 @@ with
     ),
 
     {% else %}
-    {{
-        exceptions.raise_compiler_error(
-              target.type ~ " not supported in this project"
-            )
-    }}
+    {{ exceptions.raise_compiler_error(
+      target.type ~ " not supported in this project"
+    ) }}
     {% endif %}
     tasks_dim as (
-        select
-            {{
-                dbt_utils.star(
-                        from = ref('wh_timesheet_tasks_dim')
-                      )
-            }}
+        select {{ dbt_utils.star(from=ref("wh_timesheet_tasks_dim")) }}
         from {{ ref("wh_timesheet_tasks_dim") }}
     ),
     projects_dim as (
-        select
-            {{
-                dbt_utils.star(
-                        from = ref('wh_timesheet_projects_dim')
-                      )
-            }}
+        select {{ dbt_utils.star(from=ref("wh_timesheet_projects_dim")) }}
         from {{ ref("wh_timesheet_projects_dim") }}
     ),
     timesheets as (
-        select
-            {{
-                dbt_utils.star(
-                        from = ref('int_timesheets')
-                      )
-            }}
+        select {{ dbt_utils.star(from=ref("int_timesheets")) }}
         from {{ ref("int_timesheets") }}
     )
 select
@@ -103,11 +76,9 @@ join contacts_dim u on cast(t.timesheet_users_id as string) in unnest(u.all_cont
 join companies_dim c on t.company_id = c.company_id
 join contacts_dim u on t.timesheet_users_id::string = u.contact_id
     {% else %}
-    {{
-        exceptions.raise_compiler_error(
-            target.type ~ " not supported in this project"
-          )
-    }}
+    {{ exceptions.raise_compiler_error(
+    target.type ~ " not supported in this project"
+  ) }}
     {% endif %}
 left outer join projects_dim p on t.timesheet_project_id = p.timesheet_project_id
 left outer join tasks_dim ta on t.timesheet_task_id = ta.task_id

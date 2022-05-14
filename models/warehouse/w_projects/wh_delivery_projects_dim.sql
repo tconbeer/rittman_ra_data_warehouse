@@ -6,7 +6,7 @@ with
     delivery_projects as (select * from {{ ref("int_delivery_projects") }}),
     {% if target.type == "bigquery" %}
     companies_dim as (
-        select {{ dbt_utils.star(from=ref('wh_companies_dim')) }}
+        select {{ dbt_utils.star(from=ref("wh_companies_dim")) }}
         from {{ ref("wh_companies_dim") }}
     )
     {% elif target.type == "snowflake" %}

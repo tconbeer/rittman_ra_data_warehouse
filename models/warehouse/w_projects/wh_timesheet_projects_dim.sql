@@ -4,12 +4,12 @@
 
 with
     timesheet_projects as (
-        select {{ dbt_utils.star(from=ref('int_timesheet_projects')) }}
+        select {{ dbt_utils.star(from=ref("int_timesheet_projects")) }}
         from {{ ref("int_timesheet_projects") }}
     ),
     {% if target.type == "bigquery" %}
     companies_dim as (
-        select {{ dbt_utils.star(from=ref('wh_companies_dim')) }}
+        select {{ dbt_utils.star(from=ref("wh_companies_dim")) }}
         from {{ ref("wh_companies_dim") }}
     )
     {% elif target.type == "snowflake" %}

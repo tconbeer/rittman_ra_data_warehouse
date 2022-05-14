@@ -5,15 +5,15 @@
 
 with
     subscriptions as (
-        select {{ dbt_utils.star(from=ref('wh_subscriptions_fact')) }}
+        select {{ dbt_utils.star(from=ref("wh_subscriptions_fact")) }}
         from {{ ref("wh_subscriptions_fact") }}
     ),
     customers as (
-        select {{ dbt_utils.star(from=ref('wh_customers_dim')) }}
+        select {{ dbt_utils.star(from=ref("wh_customers_dim")) }}
         from {{ ref("wh_customers_dim") }}
     ),
     subscription_billing as (
-        select {{ dbt_utils.star(from=ref('int_subscription_billing')) }}
+        select {{ dbt_utils.star(from=ref("int_subscription_billing")) }}
         from {{ ref("int_subscription_billing") }}
     )
 select generate_uuid() as subscription_billing_pk, c.customer_pk, s.subscription_pk, b.*
