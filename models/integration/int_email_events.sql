@@ -1,24 +1,21 @@
-{% if var('marketing_warehouse_email_event_sources') %}
+{% if var("marketing_warehouse_email_event_sources") %}
 
-{{config(materialized="table")}}
+{{ config(materialized="table") }}
 
-with t_email_campaign_events_merge_list as
-  (
-    {% for source in var('marketing_warehouse_email_event_sources') %}
-      {% set relation_source = 'stg_' + source + '_events' %}
+with
+    t_email_campaign_events_merge_list as (
+        {% for source in var("marketing_warehouse_email_event_sources") %}
+        {% set relation_source = "stg_" + source + "_events" %}
 
-      select
-        '{{source}}' as source,
-        *
+        select '{{source}}' as source, *
         from {{ ref(relation_source) }}
 
-        {% if not loop.last %}union all{% endif %}
-      {% endfor %}
-  )
-select * from t_email_campaign_events_merge_list
+        {% if not loop.last %} union all{% endif %}
+        {% endfor %}
+    )
+select *
+from t_email_campaign_events_merge_list
 
-{% else %}
-
-{{config(enabled=false)}}
+{% else %} {{ config(enabled=false) }}
 
 {% endif %}
