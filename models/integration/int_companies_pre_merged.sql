@@ -87,7 +87,11 @@ with
     ),
 
     {% else %}
-    {{ exceptions.raise_compiler_error(target.type ~" not supported in this project") }}
+    {{
+        exceptions.raise_compiler_error(
+            target.type ~ " not supported in this project"
+        )
+    }}
 
     {% endif %}
 

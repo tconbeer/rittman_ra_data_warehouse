@@ -15,7 +15,11 @@ with
         from {{ ref("wh_companies_dim") }} c, table(flatten(c.all_company_ids)) cf
     )
     {% else %}
-    {{ exceptions.raise_compiler_error(target.type ~" not supported in this project") }}
+    {{
+        exceptions.raise_compiler_error(
+            target.type ~ " not supported in this project"
+        )
+    }}
     {% endif %}
 select
     {{ dbt_utils.surrogate_key(["p.project_id"]) }} as delivery_project_pk,
@@ -35,7 +39,11 @@ join companies_dim c on p.company_id in unnest(c.all_company_ids)
 {% elif target.type == "snowflake" %}
 join companies_dim c on p.company_id = c.company_id
     {% else %}
-    {{ exceptions.raise_compiler_error(target.type ~" not supported in this project") }}
+    {{
+        exceptions.raise_compiler_error(
+            target.type ~ " not supported in this project"
+        )
+    }}
     {% endif %}
 
 {% else %} {{ config(enabled=false) }}

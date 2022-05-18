@@ -23,9 +23,11 @@ with
         from {{ ref("wh_contacts_dim") }} c, table(flatten(c.all_contact_ids)) cf
     )
     {% else %}
-    {{ exceptions.raise_compiler_error(
-      target.type ~ " not supported in this project"
-    ) }}
+    {{
+        exceptions.raise_compiler_error(
+            target.type ~ " not supported in this project"
+        )
+    }}
     {% endif %}
 select
     {{ dbt_utils.surrogate_key(["task_id"]) }} as delivery_task_pk,
@@ -41,9 +43,11 @@ join
 {% elif target.type == "snowflake" %}
 join contacts_dim u on t.task_assignee_user_id::string = u.contact_id
     {% else %}
-    {{ exceptions.raise_compiler_error(
-     target.type ~ " not supported in this project"
-   ) }}
+    {{
+        exceptions.raise_compiler_error(
+            target.type ~ " not supported in this project"
+        )
+    }}
     {% endif %}
 left outer join projects p on t.project_id = p.project_id
 {% else %} {{ config(enabled=false) }}

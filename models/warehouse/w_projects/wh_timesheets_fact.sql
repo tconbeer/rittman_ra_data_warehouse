@@ -23,9 +23,11 @@ with
     ),
 
     {% else %}
-    {{ exceptions.raise_compiler_error(
-      target.type ~ " not supported in this project"
-    ) }}
+    {{
+        exceptions.raise_compiler_error(
+            target.type ~ " not supported in this project"
+        )
+    }}
     {% endif %}
     tasks_dim as (
         select {{ dbt_utils.star(from=ref("wh_timesheet_tasks_dim")) }}
@@ -76,9 +78,11 @@ join contacts_dim u on cast(t.timesheet_users_id as string) in unnest(u.all_cont
 join companies_dim c on t.company_id = c.company_id
 join contacts_dim u on t.timesheet_users_id::string = u.contact_id
     {% else %}
-    {{ exceptions.raise_compiler_error(
-    target.type ~ " not supported in this project"
-  ) }}
+    {{
+        exceptions.raise_compiler_error(
+            target.type ~ " not supported in this project"
+        )
+    }}
     {% endif %}
 left outer join projects_dim p on t.timesheet_project_id = p.timesheet_project_id
 left outer join tasks_dim ta on t.timesheet_task_id = ta.task_id

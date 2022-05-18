@@ -16,7 +16,11 @@
                 replace(split_part('{{ res.status }}', '(', 2), ')', '') as numeric
             )
             {% else %}
-            {{ exceptions.raise_compiler_error(target.type ~" not supported in this project") }}
+            {{
+                exceptions.raise_compiler_error(
+                    target.type ~ " not supported in this project"
+                )
+            }}
             {% endif %}
         else 0
     end,

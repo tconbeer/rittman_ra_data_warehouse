@@ -3,7 +3,7 @@
 {%- set schema_prefix = env_var("schema_prefix", "") -%}
 
 {% if schema_prefix | length %}
-{%- set schema_prefix = schema_prefix~"_" -%}
+{%- set schema_prefix = schema_prefix ~ "_" -%}
 {% endif %}
 
 {%- if custom_schema_name is none -%} {{ schema_prefix }}{{ default_schema }}
@@ -16,7 +16,7 @@
 {%- set schema_prefix = env_var("schema_prefix", "") -%}
 
 {% if schema_prefix | length %}
-{%- set schema_prefix = schema_prefix~"_" -%}
+{%- set schema_prefix = schema_prefix ~ "_" -%}
 {% endif %}
 
 {{ schema_prefix }}{{ default_schema }}
