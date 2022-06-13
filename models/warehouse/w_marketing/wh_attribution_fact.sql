@@ -507,9 +507,8 @@ with
         from add_time_decay_score
     ),
     session_attrib_pct as (
-        select *
-        except
-            (first_page_url_host),
+        select
+            * except (first_page_url_host),
             if(
                 conversion_session
                 and not {{ var("attribution_include_conversion_session") }},

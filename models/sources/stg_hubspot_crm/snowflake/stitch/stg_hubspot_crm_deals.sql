@@ -47,9 +47,7 @@ with
                 '{{ var(' stg_hubspot_crm_id - prefix ') }}',
                 cast(a.company_id as string)
             ) as company_id,
-            d.*
-        except
-            (deal_id),
+            d.* except (deal_id),
             timestamp_millis(cast(h.value as int)) as deal_pipeline_stage_ts,
             p.pipeline_label,
             p.pipeline_display_order,

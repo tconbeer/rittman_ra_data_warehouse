@@ -9,9 +9,13 @@ with
     email_lists_dim as (select * from {{ ref("wh_email_lists_dim") }}),
     contacts_dim as (select * from {{ ref("wh_contacts_dim") }}),
     email_events as (select * from {{ ref("int_email_events") }})
--- l.list_pk,
-select generate_uuid() as email_event_pk, c.contact_pk, k.ad_campaign_pk, o.*
-except (list_id, contact_id)
+select
+
+    generate_uuid() as email_event_pk,
+    c.contact_pk,
+    -- l.list_pk,
+    k.ad_campaign_pk,
+    o.* except (list_id, contact_id)
 from email_events o
 join contacts_dim c on o.contact_id in unnest(c.all_contact_ids)
 -- LEFT JOIN email_lists_dim l

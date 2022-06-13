@@ -4,8 +4,7 @@
 
 with
     source as (
-        select *
-        except (projectkeys)
+        select * except (projectkeys)
         from
             (
                 select

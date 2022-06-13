@@ -20,9 +20,7 @@ with
                 order by e.event_ts
                 rows between unbounded preceding and current row
             ) as session_id,
-            s.*
-        except
-            (event_id, user_id),
+            s.* except (event_id, user_id),
             event_type,
             min(
                 case
@@ -120,9 +118,8 @@ with
         order by c.blended_user_id, s.session_start_ts
     ),
     session_attrib_pct as (
-        select *
-        except
-            (first_page_url_host),
+        select
+            * except (first_page_url_host),
             case
                 when
                     session_id = last_value(session_id) over (
@@ -170,9 +167,8 @@ with
         from converting_sessions_deduped_labelled
     ),
     session_attrib_pct_with_time_decay as (
-        select *
-        except
-            (weights),
+        select
+            * except (weights),
             round(
                 if(
                     safe_cast(weights as float64) = 0 or sum(

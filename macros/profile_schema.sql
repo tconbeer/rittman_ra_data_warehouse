@@ -33,11 +33,10 @@ select
         else false
     end as is_recommended_unique_column,
 
-    column_metadata.*
-except
-    (table_catalog, table_schema, table_name, column_name, is_nullable), column_stats.*
-except
-    (
+    column_metadata.* except (
+        table_catalog, table_schema, table_name, column_name, is_nullable
+    ),
+    column_stats.* except (
         table_catalog,
         table_schema,
         table_name,
@@ -125,8 +124,7 @@ from
     ) column_stats
 left outer join
     (
-        select *
-        except (is_generated, generation_expression, is_stored, is_updatable)
+        select * except (is_generated, generation_expression, is_stored, is_updatable)
         from {{ table_schema }}.information_schema.columns
     ) column_metadata
     on column_stats.table_catalog = column_metadata.table_catalog
