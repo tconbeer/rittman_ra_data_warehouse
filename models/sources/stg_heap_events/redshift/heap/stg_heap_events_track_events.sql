@@ -1,133 +1,68 @@
-{{ config(
-  enabled = target.type == 'redshift'
-) }}
+{{ config(enabled=target.type == "redshift") }}
 
 {% if var("product_warehouse_event_sources") %}
-  {% if 'heap_events_track' in var("product_warehouse_event_sources") %}
-    {{ config(
-      materialized = "table"
-    ) }}
+{% if "heap_events_track" in var("product_warehouse_event_sources") %}
+{{ config(materialized="table") }}
 
-    WITH recursive migrated_users(
-      from_user_id,
-      to_user_id,
-      LEVEL
-    ) AS (
+with recursive
+    migrated_users(from_user_id, to_user_id, level) as (
 
-      SELECT
-        from_user_id,
-        to_user_id,
-        1 AS LEVEL
-      FROM
-        {{ source(
-          'heap',
-          'user_migrations'
-        ) }}
-      UNION ALL
-      SELECT
-        u.from_user_id,
-        u.to_user_id,
-        LEVEL + 1
-      FROM
-        {{ source(
-          'heap',
-          'user_migrations'
-        ) }}
-        u,
-        migrated_users m
-      WHERE
-        u.to_user_id = m.from_user_id
-        AND LEVEL < 4
+        select from_user_id, to_user_id, 1 as level
+        from {{ source("heap", "user_migrations") }}
+        union all
+        select u.from_user_id, u.to_user_id, level + 1
+        from {{ source("heap", "user_migrations") }} u, migrated_users m
+        where u.to_user_id = m.from_user_id and level < 4
     ),
-    mapped_user_ids AS (
-      SELECT
-        from_user_id,
-        to_user_id
-      FROM
-        migrated_users
-      ORDER BY
-        to_user_id
+    mapped_user_ids as (
+        select from_user_id, to_user_id from migrated_users order by to_user_id
     ),
-    source AS (
-      SELECT
-        *
-      FROM
-        {{ source(
-          'heap',
-          'tracks'
-        ) }}
-      WHERE
-        TIME > CURRENT_DATE - INTERVAL '2 year'
+    source as (
+        select *
+        from {{ source("heap", "tracks") }}
+        where time > current_date - interval '2 year'
     ),
-    users AS (
-      SELECT
-        *
-      FROM
-        {{ source(
-          'heap',
-          'users'
-        ) }}
+    users as (select * from {{ source("heap", "users") }}),
+    sessions as (
+        select *
+        from {{ source("heap", "sessions") }}
+        where time > current_date - interval '2 year'
     ),
-    sessions AS (
-      SELECT
-        *
-      FROM
-        {{ source(
-          'heap',
-          'sessions'
-        ) }}
-      WHERE
-        TIME > CURRENT_DATE - INTERVAL '2 year'
-    ),
-    renamed AS (
-      SELECT
-        CAST(A.event_id AS {{ dbt_utils.type_string() }}) AS event_id,
-        event_table_name AS event_type,
-        A.time AS event_ts,
-        CAST(NULL AS {{ dbt_utils.type_string() }}) AS event_details,
-        CAST(NULL AS {{ dbt_utils.type_string() }}) AS page_title,
-        CAST(NULL AS {{ dbt_utils.type_string() }}) AS page_url_path,
-        REPLACE({{ dbt_utils.get_url_host('referrer') }}, 'www.', '') AS referrer_host,
-        CAST(NULL AS {{ dbt_utils.type_string() }}) AS search,
-        CAST(NULL AS {{ dbt_utils.type_string() }}) AS page_url,
-        {{ dbt_utils.get_url_host('landing_page') }} AS page_url_host,
-        CAST(NULL AS {{ dbt_utils.type_string() }}) AS gclid,
-        s.utm_term AS utm_term,
-        s.utm_content AS utm_content,
-        s.utm_medium AS utm_medium,
-        s.utm_campaign AS utm_campaign,
-        s.utm_source AS utm_source,
-        s.ip AS ip,
-        CAST(A.user_id AS {{ dbt_utils.type_string() }}) AS visitor_id,
-        u."identity" AS user_id,
-        CAST(NULL AS {{ dbt_utils.type_string() }}) AS device,
-        device AS device_category,
-        {{ var('stg_heap_events_site') }} AS site
-      FROM
-        source A
-        JOIN sessions s
-        ON A.session_id = s.session_id
-        LEFT JOIN mapped_user_ids m
-        ON A.user_id = m.from_user_id
-        JOIN users u
-        ON COALESCE(
-          m.to_user_id,
-          A.user_id
-        ) = u.user_id
-      WHERE
-        A.event_table_name NOT ILIKE 'pageviews%'
+    renamed as (
+        select
+            cast(a.event_id as {{ dbt_utils.type_string() }}) as event_id,
+            event_table_name as event_type,
+            a.time as event_ts,
+            cast(null as {{ dbt_utils.type_string() }}) as event_details,
+            cast(null as {{ dbt_utils.type_string() }}) as page_title,
+            cast(null as {{ dbt_utils.type_string() }}) as page_url_path,
+            replace(
+                {{ dbt_utils.get_url_host("referrer") }}, 'www.', ''
+            ) as referrer_host,
+            cast(null as {{ dbt_utils.type_string() }}) as search,
+            cast(null as {{ dbt_utils.type_string() }}) as page_url,
+            {{ dbt_utils.get_url_host("landing_page") }} as page_url_host,
+            cast(null as {{ dbt_utils.type_string() }}) as gclid,
+            s.utm_term as utm_term,
+            s.utm_content as utm_content,
+            s.utm_medium as utm_medium,
+            s.utm_campaign as utm_campaign,
+            s.utm_source as utm_source,
+            s.ip as ip,
+            cast(a.user_id as {{ dbt_utils.type_string() }}) as visitor_id,
+            u."identity" as user_id,
+            cast(null as {{ dbt_utils.type_string() }}) as device,
+            device as device_category,
+            {{ var("stg_heap_events_site") }} as site
+        from source a
+        join sessions s on a.session_id = s.session_id
+        left join mapped_user_ids m on a.user_id = m.from_user_id
+        join users u on coalesce(m.to_user_id, a.user_id) = u.user_id
+        where a.event_table_name not ilike 'pageviews%'
     )
-  SELECT
-    *
-  FROM
-    renamed
-  {% else %}
-    {{ config(
-      enabled = false
-    ) }}
-  {% endif %}
-{% else %}
-  {{ config(
-    enabled = false
-  ) }}
+select *
+from renamed
+{% else %} {{ config(enabled=false) }}
+{% endif %}
+{% else %} {{ config(enabled=false) }}
 {% endif %}
