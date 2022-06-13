@@ -1,20 +1,22 @@
 {%- macro conversion_orders() -%}
 
-CREATE TABLE IF NOT EXISTS {{ target.database }}.{{ target.schema }}_staging.conversion_orders (
-  ORDER_ID               STRING,
-  CUSTOMER_ID            STRING,
-  ORDER_TS               TIMESTAMP,
-  SESSION_ID             STRING,
-  CHECKOUT_ID            STRING,
-  TOTAL_REVENUE          FLOAT64,
-  CURRENCY_CODE          STRING,
-  UTM_SOURCE             STRING,
-  UTM_MEDIUM             STRING,
-  UTM_CAMPAIGN           STRING,
-  UTM_CONTENT            STRING,
-  UTM_TERM               STRING,
-  CHANNEL                STRING,
-  LAST_UPDATED_AT_TS     TIMESTAMP
+create table if
+not
+exists {{ target.database }}.{{ target.schema }}_staging.conversion_orders(
+    order_id string,
+    customer_id string,
+    order_ts timestamp,
+    session_id string,
+    checkout_id string,
+    total_revenue float64,
+    currency_code string,
+    utm_source string,
+    utm_medium string,
+    utm_campaign string,
+    utm_content string,
+    utm_term string,
+    channel string,
+    last_updated_at_ts timestamp
 )
 ;
 {% endmacro %}
