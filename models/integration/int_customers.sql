@@ -10,7 +10,9 @@ with
         {% endif %}
         {% if var("enable_segment_dashboard_events_source") and var(
     "enable_stripe_payments_source"
-) %} union all {% endif %}
+) %}
+        union all
+        {% endif %}
         {% if var("enable_stripe_payments_source") %}
 
         select * from {{ ref("stg_stripe_subscriptions_customers") }}

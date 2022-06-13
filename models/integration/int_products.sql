@@ -8,7 +8,9 @@ with
         select '{{source}}' as source, *
         from {{ ref(relation_source) }}
 
-        {% if not loop.last %} union all{% endif %}
+        {% if not loop.last %}
+        union all
+        {% endif %}
         {% endfor %}
     )
 select *

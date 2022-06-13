@@ -119,7 +119,9 @@ from
                 select *
                 from profile
             )
-        {%- if not loop.last %} union all {%- endif %}
+        {%- if not loop.last %}
+        union all
+        {%- endif %}
         {% endfor %}
     ) column_stats
 left outer join
