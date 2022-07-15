@@ -3,7 +3,11 @@
 {% set columns = [
     {"name": "_fivetran_id", "datatype": dbt_utils.type_string()},
     {"name": "_fivetran_synced", "datatype": dbt_utils.type_timestamp()},
-    {"name": "account_descriptive_name", "datatype": dbt_utils.type_string(), "alias": "account_name"},
+    {
+        "name": "account_descriptive_name",
+        "datatype": dbt_utils.type_string(),
+        "alias": "account_name",
+    },
     {"name": "ad_group_id", "datatype": dbt_utils.type_int()},
     {"name": "ad_group_name", "datatype": dbt_utils.type_string()},
     {"name": "ad_group_status", "datatype": dbt_utils.type_string()},
@@ -13,12 +17,14 @@
     {"name": "clicks", "datatype": dbt_utils.type_int()},
     {"name": "cost", "datatype": dbt_utils.type_float(), "alias": "spend"},
     {"name": "date", "datatype": "date", "alias": "date_day"},
-    {"name": "effective_final_url", "datatype": dbt_utils.type_string(), "alias": "final_url"},
+    {
+        "name": "effective_final_url",
+        "datatype": dbt_utils.type_string(),
+        "alias": "final_url",
+    },
     {"name": "external_customer_id", "datatype": dbt_utils.type_int()},
-    {"name": "impressions", "datatype": dbt_utils.type_int()}
-] %}
-
-{{ return(columns) }}
+    {"name": "impressions", "datatype": dbt_utils.type_int()},
+] %} {{ return(columns) }}
 
 {% endmacro %}
 
@@ -27,7 +33,11 @@
 {% set columns = [
     {"name": "_fivetran_id", "datatype": dbt_utils.type_string()},
     {"name": "_fivetran_synced", "datatype": dbt_utils.type_timestamp()},
-    {"name": "account_descriptive_name", "datatype": dbt_utils.type_string(), "alias": "account_name"},
+    {
+        "name": "account_descriptive_name",
+        "datatype": dbt_utils.type_string(),
+        "alias": "account_name",
+    },
     {"name": "ad_group_id", "datatype": dbt_utils.type_int()},
     {"name": "ad_group_name", "datatype": dbt_utils.type_string()},
     {"name": "ad_group_status", "datatype": dbt_utils.type_string()},
@@ -38,10 +48,8 @@
     {"name": "criteria_id", "datatype": dbt_utils.type_int()},
     {"name": "date", "datatype": "date", "alias": "date_day"},
     {"name": "external_customer_id", "datatype": dbt_utils.type_int()},
-    {"name": "gcl_id", "datatype": dbt_utils.type_string(), "alias": "gclid"}
-] %}
-
-{{ return(columns) }}
+    {"name": "gcl_id", "datatype": dbt_utils.type_string(), "alias": "gclid"},
+] %} {{ return(columns) }}
 
 {% endmacro %}
 
@@ -50,7 +58,11 @@
 {% set columns = [
     {"name": "_fivetran_id", "datatype": dbt_utils.type_string()},
     {"name": "_fivetran_synced", "datatype": dbt_utils.type_timestamp()},
-    {"name": "account_descriptive_name", "datatype": dbt_utils.type_string(), "alias": "account_name"},
+    {
+        "name": "account_descriptive_name",
+        "datatype": dbt_utils.type_string(),
+        "alias": "account_name",
+    },
     {"name": "ad_group_id", "datatype": dbt_utils.type_int()},
     {"name": "ad_group_name", "datatype": dbt_utils.type_string()},
     {"name": "ad_group_status", "datatype": dbt_utils.type_string()},
@@ -65,9 +77,7 @@
     {"name": "date", "datatype": "date", "alias": "date_day"},
     {"name": "external_customer_id", "datatype": dbt_utils.type_int()},
     {"name": "id", "datatype": dbt_utils.type_int()},
-    {"name": "impressions", "datatype": dbt_utils.type_int()}
-] %}
-
-{{ return(columns) }}
+    {"name": "impressions", "datatype": dbt_utils.type_int()},
+] %} {{ return(columns) }}
 
 {% endmacro %}
