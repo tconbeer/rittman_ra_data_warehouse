@@ -21,7 +21,8 @@ with
                     ) as sample_orders
                 from production_shopify_by_littledata.order_completed
                 group by 1
-            ) n on u.id = n.user_id
+            ) n
+            on u.id = n.user_id
 
     ),
     renamed as (
@@ -48,11 +49,11 @@ with
             state = 'enabled' as contact_is_active,
             coalesce(
                 (
-                    regexp_count(tags, 'PRO,') > 0 or regexp_count(
-                        tags, 'PRO_25,'
-                    ) > 0 or regexp_count(tags, 'PRO_20,') > 0 or regexp_count(
-                        tags, 'PRO_15,'
-                    ) > 0 or regexp_count(tags, 'PRO_FACEBOOK')
+                    regexp_count(tags, 'PRO,') > 0
+                    or regexp_count(tags, 'PRO_25,') > 0
+                    or regexp_count(tags, 'PRO_20,') > 0
+                    or regexp_count(tags, 'PRO_15,') > 0
+                    or regexp_count(tags, 'PRO_FACEBOOK')
                 ),
                 false
             ) as contact_is_pro,

@@ -22,12 +22,10 @@ with
             null as ad_campaign_total_conversions,
             null as ad_campaign_total_cost,
             ad_campaign_total_emails_open
-            + ad_campaign_total_emails_clicks
-            as ad_campaign_total_engagements,
+            + ad_campaign_total_emails_clicks as ad_campaign_total_engagements,
             ad_campaign_total_emails_open as ad_campaign_total_impressions,
             ad_campaign_bounces
-            + ad_campaign_total_emails_unsubscribed
-            as ad_campaign_total_invalid_clicks,
+            + ad_campaign_total_emails_unsubscribed as ad_campaign_total_invalid_clicks,
             ad_network
         from {{ ref("stg_hubspot_email_email_performance") }}
     )

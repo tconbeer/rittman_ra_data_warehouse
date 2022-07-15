@@ -97,11 +97,9 @@ with
             count_dbt * multiplier as weighted_count_dbt,
             count_customer_journey * multiplier as weighted_count_customer_journey,
             count_data_centralisation
-            * multiplier
-            as weighted_count_data_centralisation,
+            * multiplier as weighted_count_data_centralisation,
             count_marketing_analytics
-            * multiplier
-            as weighted_count_marketing_analytics,
+            * multiplier as weighted_count_marketing_analytics,
             count_segment * multiplier as weighted_count_segment,
             count_modern_data_stack * multiplier as weighted_count_modern_data_stack,
             count_startup * multiplier as weighted_count_startup,
@@ -164,9 +162,8 @@ with
         select contact_pk, count(*) as visits_l90_days
         from {{ ref("wh_contact_web_event_history") }}
         where
-            event_ts >= timestamp_sub(
-                current_timestamp, interval 90 day
-            ) and event_type = 'Page View'
+            event_ts >= timestamp_sub(current_timestamp, interval 90 day)
+            and event_type = 'Page View'
         group by 1
     )
 select

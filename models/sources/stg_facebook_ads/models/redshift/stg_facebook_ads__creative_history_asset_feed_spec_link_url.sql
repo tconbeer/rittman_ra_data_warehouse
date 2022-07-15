@@ -1,8 +1,6 @@
 {% if target.type == "redshift" %}
 {% if var("marketing_warehouse_ad_sources") %}
 {% if "facebook_ads" in var("marketing_warehouse_ad_sources") %}
-
-
 with
     base as (select * from {{ ref("stg_facebook_ads__creative_history") }}),
     numbers as (select * from {{ ref("utils__facebook_ads__numbers") }}),
@@ -25,9 +23,9 @@ with
             numbers.generated_number - 1 as index
         from required_fields
         inner join
-            numbers on json_array_length(
-                required_fields.asset_feed_spec_link_urls
-            ) >= numbers.generated_number
+            numbers
+            on json_array_length(required_fields.asset_feed_spec_link_urls)
+            >= numbers.generated_number
 
     ),
     extracted_fields as (

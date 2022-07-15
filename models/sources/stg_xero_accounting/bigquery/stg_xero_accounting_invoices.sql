@@ -3,8 +3,6 @@
 {% if "xero_accounting" in var("finance_warehouse_invoice_sources") %}
 
 {% if var("stg_xero_accounting_etl") == "fivetran" %}
-
-
 with
     source as (select * from {{ source("fivetran_xero_accounting", "invoice") }}),
     renamed as (

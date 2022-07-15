@@ -143,7 +143,8 @@ with
                     coalesce(
                         marketing_channel_mapping.channel,
                         additional_referrer_mapping.channel
-                    ) is not null
+                    )
+                    is not null
                 then
                     coalesce(
                         marketing_channel_mapping.channel,
@@ -153,7 +154,9 @@ with
                     coalesce(
                         marketing_channel_mapping.channel,
                         additional_referrer_mapping.channel
-                    ) is null and mapped.referrer_host is not null
+                    )
+                    is null
+                    and mapped.referrer_host is not null
                 then 'Referral'
                 else 'Direct'
             end as channel

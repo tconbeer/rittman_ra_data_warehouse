@@ -37,9 +37,8 @@ select
 from tasks t
 {% if target.type == "bigquery" %}
 join
-    contacts_dim u on cast(t.task_assignee_user_id as string) in unnest(
-        u.all_contact_ids
-    )
+    contacts_dim u
+    on cast(t.task_assignee_user_id as string) in unnest(u.all_contact_ids)
 {% elif target.type == "snowflake" %}
 join contacts_dim u on t.task_assignee_user_id::string = u.contact_id
     {% else %}

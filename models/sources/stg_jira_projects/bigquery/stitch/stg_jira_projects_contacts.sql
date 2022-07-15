@@ -48,9 +48,8 @@ with
             cast(null as {{ dbt_utils.type_timestamp() }}) as contact_last_modified_date
         from source
         where
-            concat(
-                '{{ var(' stg_jira_projects_id - prefix ') }}', accountid
-            ) not like '%addon%'
+            concat('{{ var(' stg_jira_projects_id - prefix ') }}', accountid)
+            not like '%addon%'
         union all
         select
             concat('{{ var(' stg_jira_projects_id - prefix ') }}', -999) as contact_id,

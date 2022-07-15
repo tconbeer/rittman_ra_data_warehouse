@@ -1,8 +1,7 @@
 {%- macro conversion_orders() -%}
 
 create table if
-not
-exists {{ target.database }}.{{ target.schema }}_staging.conversion_orders(
+not exists {{ target.database }}.{{ target.schema }}_staging.conversion_orders(
     order_id string,
     customer_id string,
     order_ts timestamp,

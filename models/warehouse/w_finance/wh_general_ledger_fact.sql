@@ -3,9 +3,7 @@
 {{ config(unique_key="journal_pk", alias="general_ledger_fact") }}
 
 with
-    journals as (select * from {{ ref("wh_journals_fact") }})
-
-    ,
+    journals as (select * from {{ ref("wh_journals_fact") }}),
     accounts as (select * from {{ ref("wh_chart_of_accounts_dim") }}),
     invoices as (
 

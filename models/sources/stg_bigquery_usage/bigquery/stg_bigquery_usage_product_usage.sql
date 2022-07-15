@@ -1,8 +1,6 @@
 {{ config(enabled=target.type == "bigquery") }}
 {% if var("product_warehouse_usage_sources") %}
 {% if "bigquery_usage" in var("product_warehouse_usage_sources") %}
-
-
 with
     source as (
         select *
@@ -47,7 +45,8 @@ with
             (
                 protopayload_auditlog.servicedata_v1_bigquery.jobcompletedevent.job.jobstatistics.totalbilledbytes
                 / 1099511627776
-            ) * .72 as product_usage_cost,
+            )
+            * .72 as product_usage_cost,
             protopayload_auditlog.servicedata_v1_bigquery.jobcompletedevent.job.jobstatistics.totalprocessedbytes
             as product_usage_amount,
             0.72 as product_currency_conversion_rate,
@@ -87,8 +86,7 @@ with
         from source
         where
             protopayload_auditlog.servicedata_v1_bigquery.jobcompletedevent.job.jobconfiguration.query.statementtype
-            is
-            not null
+            is not null
     )
 select *
 from renamed

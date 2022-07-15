@@ -214,7 +214,8 @@ from
                 - count_registration_conversions
                 - count_first_order_conversions
                 - count_repeat_order_conversions
-            ) = 0 as pass
+            )
+            = 0 as pass
         from totals
         union all
         select
@@ -225,15 +226,18 @@ from
                         first_order_total_revenue = round(
                             first_order_first_click_attrib_revenue
                         )
-                    ) and (
+                    )
+                    and (
                         first_order_total_revenue = round(
                             first_order_last_click_attrib_revenue
                         )
-                    ) and (
+                    )
+                    and (
                         first_order_total_revenue = round(
                             first_order_even_click_attrib_revenue
                         )
-                    ) and (
+                    )
+                    and (
                         first_order_total_revenue = round(
                             first_order_time_decay_attrib_revenue
                         )
@@ -251,15 +255,18 @@ from
                         repeat_order_total_revenue = round(
                             repeat_order_first_click_attrib_revenue
                         )
-                    ) and (
+                    )
+                    and (
                         repeat_order_total_revenue = round(
                             repeat_order_last_click_attrib_revenue
                         )
-                    ) and (
+                    )
+                    and (
                         repeat_order_total_revenue = round(
                             repeat_order_even_click_attrib_revenue
                         )
-                    ) and (
+                    )
+                    and (
                         repeat_order_total_revenue = round(
                             repeat_order_time_decay_attrib_revenue
                         )

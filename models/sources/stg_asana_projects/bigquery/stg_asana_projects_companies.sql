@@ -1,8 +1,6 @@
 {{ config(enabled=target.type == "bigquery") }}
 {% if var("crm_warehouse_company_sources") %}
 {% if "asana_projects" in var("crm_warehouse_company_sources") %}
-
-
 with
     source as (
         {{

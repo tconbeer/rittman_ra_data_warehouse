@@ -122,7 +122,9 @@ with
             * except (first_page_url_host),
             case
                 when
-                    session_id = last_value(session_id) over (
+                    session_id = last_value(
+                        session_id
+                    ) over (
                         partition by blended_user_id
                         order by session_start_ts
                         rows between unbounded preceding and unbounded following
@@ -132,7 +134,9 @@ with
             end as last_click_attrib_pct,
             case
                 when
-                    session_id = first_value(session_id) over (
+                    session_id = first_value(
+                        session_id
+                    ) over (
                         partition by blended_user_id
                         order by session_start_ts
                         rows between unbounded preceding and unbounded following
@@ -140,22 +144,30 @@ with
                 then 1
                 else 0
             end as first_click_attrib_pct,
-            1 / count(session_id) over (
+            1 / count(
+                session_id
+            ) over (
                 partition by blended_user_id
             ) as even_click_attrib_pct,
             case
                 when
-                    session_start_ts = first_value(session_start_ts) over (
+                    session_start_ts = first_value(
+                        session_start_ts
+                    ) over (
                         partition by blended_user_id order by session_start_ts
-                    ) and max(event) over (partition by blended_user_id) = 1
+                    )
+                    and max(event) over (partition by blended_user_id) = 1
                 then
                     safe_cast(
                         1.1 - row_number() over (partition by blended_user_id) as string
                     )
                 when
-                    session_start_ts > lag(session_start_ts) over (
+                    session_start_ts > lag(
+                        session_start_ts
+                    ) over (
                         partition by blended_user_id order by session_start_ts
-                    ) and max(event) over (partition by blended_user_id) = 1
+                    )
+                    and max(event) over (partition by blended_user_id) = 1
                 then
                     safe_cast(
                         round(
@@ -171,13 +183,17 @@ with
             * except (weights),
             round(
                 if(
-                    safe_cast(weights as float64) = 0 or sum(
-                        safe_cast(weights as float64)
-                    ) over (partition by blended_user_id) = 0,
+                    safe_cast(weights as float64) = 0
+                    or sum(safe_cast(weights as float64)) over (
+                        partition by blended_user_id
+                    )
+                    = 0,
                     0,
                     safe_cast(weights as float64) / sum(
                         safe_cast(weights as float64)
-                    ) over (partition by blended_user_id)
+                    ) over (
+                        partition by blended_user_id
+                    )
                 ),
                 2
             ) as time_decay_attrib_pct

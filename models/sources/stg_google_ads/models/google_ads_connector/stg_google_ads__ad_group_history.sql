@@ -2,8 +2,6 @@
 {% if var("marketing_warehouse_ad_sources") %}
 {% if "google_ads" in var("marketing_warehouse_ad_sources") %}
 {% if var("google_ads_api_source") == "google_ads" %}
-
-
 with
     base as (select * from {{ ref("stg_google_ads__ad_group_history_tmp") }}),
 
@@ -40,9 +38,8 @@ with
 
         select
             *,
-            row_number() over (
-                partition by ad_group_id order by updated_timestamp desc
-            ) = 1 as is_most_recent_record
+            row_number() over (partition by ad_group_id order by updated_timestamp desc)
+            = 1 as is_most_recent_record
         from final
 
     )

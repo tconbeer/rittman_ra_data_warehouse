@@ -1,6 +1,4 @@
 {% if var("subscriptions_warehouse_sources") %}
-
-
 with
     subscriptions_merge_list as (
         select * from {{ ref("stg_stripe_subscriptions_subscriptions") }}

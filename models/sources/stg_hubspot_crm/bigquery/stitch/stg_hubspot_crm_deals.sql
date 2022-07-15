@@ -147,9 +147,9 @@ with
             property_hs_date_exited_appointmentscheduled.value
             as date_exited_deal_stage_0,
             round(
-                cast(
-                    property_hs_time_in_appointmentscheduled.value as int64
-                ) / 3600000 / 24,
+                cast(property_hs_time_in_appointmentscheduled.value as int64)
+                / 3600000
+                / 24,
                 0
             ) as days_in_deal_stage_0,
             property_hs_date_entered_1164152.value as date_entered_deal_stage_1,
@@ -173,9 +173,9 @@ with
             property_hs_date_exited_presentationscheduled.value
             as date_exited_deal_stage_4,
             round(
-                cast(
-                    property_hs_time_in_presentationscheduled.value as int64
-                ) / 3600000 / 24,
+                cast(property_hs_time_in_presentationscheduled.value as int64)
+                / 3600000
+                / 24,
                 0
             ) as days_in_deal_stage_4,
             property_hs_date_entered_1164140.value as date_entered_deal_stage_5,
@@ -191,7 +191,9 @@ with
                 cast(
                     property_hs_time_in_553a886b_24bc_4ec4_bca3_b1b7fcd9e1c7_1321074272.value
                     as int64
-                ) / 3600000 / 24,
+                )
+                / 3600000
+                / 24,
                 0
             ) as days_in_deal_stage_6,
             property_hs_date_entered_7c41062e_06c6_4a4a_87eb_de503061b23c_975176047.value
@@ -202,7 +204,9 @@ with
                 cast(
                     property_hs_time_in_7c41062e_06c6_4a4a_87eb_de503061b23c_975176047.value
                     as int64
-                ) / 3600000 / 24,
+                )
+                / 3600000
+                / 24,
                 0
             ) as days_in_deal_stage_7,
             property_hs_date_entered_1031924.value as date_entered_deal_stage_8,
@@ -226,13 +230,20 @@ with
     joined as (
         select
             d.*,
-            d.days_in_deal_stage_0 + coalesce(d.days_in_deal_stage_1, 0) +
-            coalesce(d.days_in_deal_stage_2, 0) +
-            coalesce(d.days_in_deal_stage_3, 0) +
-            coalesce(d.days_in_deal_stage_4, 0) +
-            coalesce(d.days_in_deal_stage_5, 0) +
-            coalesce(d.days_in_deal_stage_6, 0) +
-            coalesce(d.days_in_deal_stage_7, 0) as days_in_pipeline,
+            d.days_in_deal_stage_0 + coalesce(
+                d.days_in_deal_stage_1, 0
+            ) + coalesce(
+                d.days_in_deal_stage_2, 0
+            ) + coalesce(
+                d.days_in_deal_stage_3, 0
+            ) + coalesce(
+                d.days_in_deal_stage_4, 0
+            ) + coalesce(
+                d.days_in_deal_stage_5, 0
+            ) + coalesce(
+                d.days_in_deal_stage_6, 0
+            )
+            + coalesce(d.days_in_deal_stage_7, 0) as days_in_pipeline,
             p.pipeline_label,
             p.pipeline_display_order,
             s.pipeline_stage_label,

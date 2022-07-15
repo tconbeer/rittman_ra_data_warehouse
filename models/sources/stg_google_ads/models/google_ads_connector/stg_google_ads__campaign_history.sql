@@ -36,9 +36,8 @@ with
 
         select
             *,
-            row_number() over (
-                partition by campaign_id order by updated_timestamp desc
-            ) = 1 as is_most_recent_record
+            row_number() over (partition by campaign_id order by updated_timestamp desc)
+            = 1 as is_most_recent_record
         from final
 
     )

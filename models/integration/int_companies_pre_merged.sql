@@ -84,7 +84,8 @@ with
                     company_country,
                     company_zip
                 )
-            ) > 0
+            )
+            > 0
         group by 1
     ),
 

@@ -1,6 +1,4 @@
 {% if var("projects_warehouse_timesheet_sources") %}
-
-
 with
     t_projects_merge_list as (
         {% for source in var("projects_warehouse_timesheet_sources") %}

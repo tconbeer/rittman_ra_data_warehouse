@@ -2,8 +2,6 @@
 {% if var("crm_warehouse_company_sources") %}
 {% if "hubspot_crm" in var("crm_warehouse_company_sources") %}
 {% if var("stg_hubspot_crm_etl") == "stitch" %}
-
-
 with
     source as (
         {{

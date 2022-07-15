@@ -39,9 +39,8 @@ with
             template_app_link_spec_ipad,
             template_app_link_spec_android,
             template_app_link_spec_iphone,
-            row_number() over (
-                partition by id order by _fivetran_synced desc
-            ) = 1 as is_most_recent_record
+            row_number() over (partition by id order by _fivetran_synced desc)
+            = 1 as is_most_recent_record
         from fields
 
     )

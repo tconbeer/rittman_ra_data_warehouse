@@ -38,9 +38,8 @@ with
                 from {{ ref("wh_web_events_fact") }}
             )
         where
-            event_type != '{{ var(' attribution_create_account_event_type ') }}' or (
-                event_id = first_registration_event_id
-            )
+            event_type != '{{ var(' attribution_create_account_event_type ') }}'
+            or (event_id = first_registration_event_id)
     ),
     converting_events as (
         select
@@ -117,7 +116,8 @@ with
             sum(count_registration_conversions) as count_registration_conversions,
             sum(count_registration_conversions) + sum(
                 count_first_order_conversions
-            ) + sum(count_repeat_order_conversions) as count_conversions,
+            )
+            + sum(count_repeat_order_conversions) as count_conversions,
             max(converted_ts) as converted_ts
         from converting_events
         group by 1
@@ -277,8 +277,8 @@ with
                             utm_campaign,
                             referrer_host,
                             first_page_url_host,
-                            split(net.reg_domain(referrer_host), '.') [
-                                offset (0)
+                            split(
+                                net.reg_domain(referrer_host), '.') [offset (0)
                             ] as referrer_domain,
                             channel,
                             case
@@ -348,7 +348,8 @@ with
                         partition by blended_user_id
                         order by session_start_ts
                         rows between unbounded preceding and current row
-                    ) + 1
+                    )
+                    + 1
                 else
                     max(user_total_registration_conversions) over (
                         partition by blended_user_id
@@ -364,7 +365,8 @@ with
                         partition by blended_user_id
                         order by session_start_ts
                         rows between unbounded preceding and current row
-                    ) + 1
+                    )
+                    + 1
                 else
                     max(user_total_conversions) over (
                         partition by blended_user_id
@@ -380,7 +382,8 @@ with
                         partition by blended_user_id
                         order by session_start_ts
                         rows between unbounded preceding and current row
-                    ) + 1
+                    )
+                    + 1
                 else
                     max(user_total_first_order_conversions) over (
                         partition by blended_user_id
@@ -396,7 +399,8 @@ with
                         partition by blended_user_id
                         order by session_start_ts
                         rows between unbounded preceding and current row
-                    ) + 1
+                    )
+                    + 1
                 else
                     max(user_total_repeat_order_conversions) over (
                         partition by blended_user_id
@@ -417,21 +421,29 @@ with
     days_to_each_conversion as (
         select
             *,
-            session_day_number - max(session_day_number) over (
+            session_day_number - max(
+                session_day_number
+            ) over (
                 partition by blended_user_id, user_conversion_cycle
             ) as days_before_conversion,
             (
-                session_day_number - max(session_day_number) over (
+                session_day_number - max(
+                    session_day_number
+                ) over (
                     partition by blended_user_id, user_conversion_cycle
                 )
-            ) * -1
+            )
+            * -1
             <= {{ var("attribution_lookback_days_window") }}
             as is_within_attribution_lookback_window,
             (
-                session_day_number - max(session_day_number) over (
+                session_day_number - max(
+                    session_day_number
+                ) over (
                     partition by blended_user_id, user_conversion_cycle
                 )
-            ) * -1
+            )
+            * -1
             <= {{ var("attribution_time_decay_days_window") }}
             as is_within_attribution_time_decay_days_window
         from converting_sessions_deduped_labelled_with_session_day_number
@@ -517,13 +529,12 @@ with
                     when
                         session_id = last_value(
                             if(
-                                is_within_attribution_lookback_window and (
-                                    not conversion_session or {{
+                                is_within_attribution_lookback_window
+                                and (not conversion_session or {{
                                         var(
                                             "attribution_include_conversion_session"
                                         )
-                                    }}
-                                ),
+                                    }}),
                                 session_id,
                                 null
                             ) ignore nulls
@@ -545,13 +556,13 @@ with
                     when
                         session_id = last_value(
                             if(
-                                is_within_attribution_lookback_window and (
-                                    not conversion_session or {{
+                                is_within_attribution_lookback_window
+                                and (not conversion_session or {{
                                         var(
                                             "attribution_include_conversion_session"
                                         )
-                                    }}
-                                ) and is_non_direct_channel,
+                                    }})
+                                and is_non_direct_channel,
                                 session_id,
                                 null
                             ) ignore nulls
@@ -573,13 +584,13 @@ with
                     when
                         session_id = last_value(
                             if(
-                                is_within_attribution_lookback_window and (
-                                    not conversion_session or {{
+                                is_within_attribution_lookback_window
+                                and (not conversion_session or {{
                                         var(
                                             "attribution_include_conversion_session"
                                         )
-                                    }}
-                                ) and is_paid_channel,
+                                    }})
+                                and is_paid_channel,
                                 session_id,
                                 null
                             ) ignore nulls
@@ -620,13 +631,13 @@ with
                     when
                         session_id = first_value(
                             if(
-                                is_within_attribution_lookback_window and (
-                                    not conversion_session or {{
+                                is_within_attribution_lookback_window
+                                and (not conversion_session or {{
                                         var(
                                             "attribution_include_conversion_session"
                                         )
-                                    }}
-                                ) and is_non_direct_channel,
+                                    }})
+                                and is_non_direct_channel,
                                 session_id,
                                 null
                             ) ignore nulls
@@ -647,13 +658,13 @@ with
                     when
                         session_id = first_value(
                             if(
-                                is_within_attribution_lookback_window and (
-                                    not conversion_session or {{
+                                is_within_attribution_lookback_window
+                                and (not conversion_session or {{
                                         var(
                                             "attribution_include_conversion_session"
                                         )
-                                    }}
-                                ) and is_paid_channel,
+                                    }})
+                                and is_paid_channel,
                                 session_id,
                                 null
                             ) ignore nulls
@@ -726,202 +737,242 @@ with
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_click_attrib_pct
+                )
+                * first_click_attrib_pct
             ) as user_registration_first_click_attrib_conversions,
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_non_direct_click_attrib_pct
+                )
+                * first_non_direct_click_attrib_pct
             ) as user_registration_first_non_direct_click_attrib_conversions,
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_paid_click_attrib_pct
+                )
+                * first_paid_click_attrib_pct
             ) as user_registration_first_paid_click_attrib_conversions,
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_click_attrib_pct
+                )
+                * last_click_attrib_pct
             ) as user_registration_last_click_attrib_conversions,
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_non_direct_click_attrib_pct
+                )
+                * last_non_direct_click_attrib_pct
             ) as user_registration_last_non_direct_click_attrib_conversions,
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_paid_click_attrib_pct
+                )
+                * last_paid_click_attrib_pct
             ) as user_registration_last_paid_click_attrib_conversions,
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * even_click_attrib_pct
+                )
+                * even_click_attrib_pct
             ) as user_registration_even_click_attrib_conversions,
             (
                 max(count_registration_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * time_decay_attrib_pct
+                )
+                * time_decay_attrib_pct
             ) as user_registration_time_decay_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_click_attrib_pct
+                )
+                * first_click_attrib_pct
             ) as first_order_first_click_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_non_direct_click_attrib_pct
+                )
+                * first_non_direct_click_attrib_pct
             ) as first_order_first_non_direct_click_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_paid_click_attrib_pct
+                )
+                * first_paid_click_attrib_pct
             ) as first_order_first_paid_click_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_click_attrib_pct
+                )
+                * last_click_attrib_pct
             ) as first_order_last_click_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_non_direct_click_attrib_pct
+                )
+                * last_non_direct_click_attrib_pct
             ) as first_order_last_non_direct_click_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_paid_click_attrib_pct
+                )
+                * last_paid_click_attrib_pct
             ) as first_order_last_paid_click_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * even_click_attrib_pct
+                )
+                * even_click_attrib_pct
             ) as first_order_even_click_attrib_conversions,
             (
                 max(count_first_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * time_decay_attrib_pct
+                )
+                * time_decay_attrib_pct
             ) as first_order_time_decay_attrib_conversions,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_click_attrib_pct
+                )
+                * first_click_attrib_pct
             ) as first_order_first_click_attrib_revenue,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_non_direct_click_attrib_pct
+                )
+                * first_non_direct_click_attrib_pct
             ) as first_order_first_non_direct_click_attrib_revenue,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_paid_click_attrib_pct
+                )
+                * first_paid_click_attrib_pct
             ) as first_order_first_paid_click_attrib_revenue,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_click_attrib_pct
+                )
+                * last_click_attrib_pct
             ) as first_order_last_click_attrib_revenue,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_non_direct_click_attrib_pct
+                )
+                * last_non_direct_click_attrib_pct
             ) as first_order_last_non_direct_click_attrib_revenue,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_paid_click_attrib_pct
+                )
+                * last_paid_click_attrib_pct
             ) as first_order_last_paid_click_attrib_revenue,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * even_click_attrib_pct
+                )
+                * even_click_attrib_pct
             ) as first_order_even_click_attrib_revenue,
             (
                 max(first_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * time_decay_attrib_pct
+                )
+                * time_decay_attrib_pct
             ) as first_order_time_decay_attrib_revenue,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_click_attrib_pct
+                )
+                * first_click_attrib_pct
             ) as repeat_order_first_click_attrib_conversions,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_non_direct_click_attrib_pct
+                )
+                * first_non_direct_click_attrib_pct
             ) as repeat_order_first_non_direct_click_attrib_conversions,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_paid_click_attrib_pct
+                )
+                * first_paid_click_attrib_pct
             ) as repeat_order_first_paid_click_attrib_conversions,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_click_attrib_pct
+                )
+                * last_click_attrib_pct
             ) as repeat_order_last_click_attrib_conversions,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_non_direct_click_attrib_pct
+                )
+                * last_non_direct_click_attrib_pct
             ) as repeat_order_last_non_direct_click_attrib_conversions,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_paid_click_attrib_pct
+                )
+                * last_paid_click_attrib_pct
             ) as repeat_order_last_paid_click_attrib_conversions,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * even_click_attrib_pct
+                )
+                * even_click_attrib_pct
             ) as repeat_order_even_click_attrib_conversions,
             (
                 max(count_repeat_order_conversions) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * time_decay_attrib_pct
+                )
+                * time_decay_attrib_pct
             ) as repeat_order_time_decay_attrib_conversions,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_click_attrib_pct
+                )
+                * first_click_attrib_pct
             ) as repeat_order_first_click_attrib_revenue,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_non_direct_click_attrib_pct
+                )
+                * first_non_direct_click_attrib_pct
             ) as repeat_order_first_non_direct_click_attrib_revenue,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * first_paid_click_attrib_pct
+                )
+                * first_paid_click_attrib_pct
             ) as repeat_order_first_paid_click_attrib_revenue,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_click_attrib_pct
+                )
+                * last_click_attrib_pct
             ) as repeat_order_last_click_attrib_revenue,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_non_direct_click_attrib_pct
+                )
+                * last_non_direct_click_attrib_pct
             ) as repeat_order_last_non_direct_click_attrib_revenue,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * last_paid_click_attrib_pct
+                )
+                * last_paid_click_attrib_pct
             ) as repeat_order_last_paid_click_attrib_revenue,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * even_click_attrib_pct
+                )
+                * even_click_attrib_pct
             ) as repeat_order_even_click_attrib_revenue,
             (
                 max(repeat_order_total_revenue) over (
                     partition by blended_user_id, user_conversion_cycle
-                ) * time_decay_attrib_pct
+                )
+                * time_decay_attrib_pct
             ) as repeat_order_time_decay_attrib_revenue
         from session_attrib_pct {{ dbt_utils.group_by(57) }}
     )

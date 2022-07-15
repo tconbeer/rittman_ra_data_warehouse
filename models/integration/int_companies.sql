@@ -85,15 +85,15 @@ with
                             )
                         group by 1
                     )
-            ) m on c.company_name = m.company_name
+            ) m
+            on c.company_name = m.company_name
         where
             c.company_name not in (
                 select c2.company_name
                 from {{ ref("companies_merge_list") }} m
                 join
-                    companies_pre_merged c2 on m.old_company_id in unnest(
-                        c2.all_company_ids
-                    )
+                    companies_pre_merged c2
+                    on m.old_company_id in unnest(c2.all_company_ids)
             )
 
         {% elif target.type == "snowflake" %}
@@ -115,7 +115,8 @@ with
                                 from
                                     {{ ref("int_companies_pre_merged") }} c1,
                                     table(flatten(c1.all_company_ids)) c1f
-                            ) c1 on m.old_company_id = c1.all_company_ids
+                            ) c1
+                            on m.old_company_id = c1.all_company_ids
                         join
                             (
                                 select
@@ -124,7 +125,8 @@ with
                                 from
                                     {{ ref("int_companies_pre_merged") }} c2,
                                     table(flatten(c2.all_company_ids)) c2f
-                            ) c2 on m.company_id = c2.all_company_ids
+                            ) c2
+                            on m.company_id = c2.all_company_ids
                         union all
                         select
                             c2.company_name as company_name,
@@ -138,7 +140,8 @@ with
                                 from
                                     {{ ref("int_companies_pre_merged") }} c1,
                                     table(flatten(c1.all_company_ids)) c1f
-                            ) c1 on m.old_company_id = c1.all_company_ids
+                            ) c1
+                            on m.old_company_id = c1.all_company_ids
                         join
                             (
                                 select
@@ -147,10 +150,12 @@ with
                                 from
                                     {{ ref("int_companies_pre_merged") }} c2,
                                     table(flatten(c2.all_company_ids)) c2f
-                            ) c2 on m.company_id = c2.all_company_ids
+                            ) c2
+                            on m.company_id = c2.all_company_ids
                     )
                 group by 1
-            ) m on c.company_name = m.company_name
+            ) m
+            on c.company_name = m.company_name
         where
             c.company_name not in (
                 select c2.company_name
@@ -161,7 +166,8 @@ with
                         from
                             {{ ref("int_companies_pre_merged") }} c2,
                             table(flatten(c2.all_company_ids)) c2f
-                    ) c2 on m.old_company_id = c2.all_company_ids
+                    ) c2
+                    on m.old_company_id = c2.all_company_ids
             )
 
             {% else %}

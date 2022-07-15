@@ -1,8 +1,6 @@
 {% if target.type == "redshift" %}
 {% if var("marketing_warehouse_ad_sources") %}
 {% if "facebook_ads" in var("marketing_warehouse_ad_sources") %}
-
-
 with
     base as (select * from {{ ref("int__facebook_ads__carousel_media_prep") }}),
     fields as (

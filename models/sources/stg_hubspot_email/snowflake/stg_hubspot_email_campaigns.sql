@@ -24,9 +24,8 @@ with
                     name as ad_campaign_name,
                     case
                         when
-                            max(_sdc_received_at) over (
-                                partition by id
-                            ) < {{ dbt_utils.current_timestamp() }}
+                            max(_sdc_received_at) over (partition by id)
+                            < {{ dbt_utils.current_timestamp() }}
                         then 'PAUSED'
                         else 'ACTIVE'
                     end as ad_campaign_status,

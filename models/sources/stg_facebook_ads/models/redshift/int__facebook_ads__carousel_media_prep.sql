@@ -35,9 +35,9 @@ with
             ) as element
         from required_fields
         inner join
-            numbers on json_array_length(
-                required_fields.child_attachments
-            ) >= numbers.generated_number
+            numbers
+            on json_array_length(required_fields.child_attachments)
+            >= numbers.generated_number
 
     ),
     extracted_fields as (

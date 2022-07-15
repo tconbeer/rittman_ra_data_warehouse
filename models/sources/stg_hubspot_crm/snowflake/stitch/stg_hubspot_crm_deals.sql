@@ -1,8 +1,6 @@
 {{ config(enabled=target.type == "snowflake") }}
 {% if var("marketing_warehouse_deal_sources") %}
 {% if "hubspot_crm" in var("marketing_warehouse_deal_sources") %}
-
-
 {% if var("stg_hubspot_crm_etl") == "fivetran" %}
 
 with

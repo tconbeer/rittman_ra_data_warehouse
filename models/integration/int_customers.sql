@@ -1,6 +1,4 @@
 {% if var("subscriptions_warehouse_sources") %}
-
-
 with
     customers_merge_list as (
         {% if var("enable_segment_dashboard_events_source") %}

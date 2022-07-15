@@ -32,12 +32,14 @@ select
     currency_code
 from events_merge_list e
 left join
-    order_conversions o on cast(
+    order_conversions o
+    on cast(
         case
             when e.event_type = '{{ var(' attribution_conversion_event_type ') }}'
             then e.event_details
         end as {{ dbt_utils.type_string() }}
-    ) = o.order_id
+    )
+    = o.order_id
 
 
 {% else %} {{ config(enabled=false) }}

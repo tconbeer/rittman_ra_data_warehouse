@@ -66,9 +66,8 @@ with
             end as total_delivery_tasks,
             case
                 when
-                    case
-                        when parent.gid is null then 'Task' else 'Subtask'
-                    end = 'Subtask'
+                    case when parent.gid is null then 'Task' else 'Subtask' end
+                    = 'Subtask'
                 then 1
             end as total_delivery_subtasks,
             1 as total_issues,

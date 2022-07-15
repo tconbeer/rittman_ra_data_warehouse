@@ -7,8 +7,6 @@
 }}
 {% if var("product_warehouse_event_sources") %}
 {% if "mixpanel_events" in var("product_warehouse_event_sources") %}
-
-
 with
     source as (select * from {{ source("fivetran_mixpanel_events", "events") }}),
     renamed_full as (

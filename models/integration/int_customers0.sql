@@ -19,11 +19,11 @@ select
     *,
     coalesce(
         (
-            regexp_count(customer_tags, 'PRO,') > 0 or regexp_count(
-                customer_tags, 'PRO_25,'
-            ) > 0 or regexp_count(customer_tags, 'PRO_20,') > 0 or regexp_count(
-                customer_tags, 'PRO_15,'
-            ) > 0 or regexp_count(customer_tags, 'PRO_FACEBOOK')
+            regexp_count(customer_tags, 'PRO,') > 0
+            or regexp_count(customer_tags, 'PRO_25,') > 0
+            or regexp_count(customer_tags, 'PRO_20,') > 0
+            or regexp_count(customer_tags, 'PRO_15,') > 0
+            or regexp_count(customer_tags, 'PRO_FACEBOOK')
         ),
         false
     ) as contact_is_pro

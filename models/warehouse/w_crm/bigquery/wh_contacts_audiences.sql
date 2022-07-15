@@ -22,20 +22,23 @@ with
                 from
                     {{ ref("wh_companies_dim") }} c,
                     unnest(all_company_ids) as company_id
-            ) c on ct.company_id = c.company_id
+            ) c
+            on ct.company_id = c.company_id
         left join
             (
                 select contact_pk, contact_id
                 from {{ ref("wh_contacts_dim") }}, unnest(all_contact_ids) as contact_id
                 where contact_id like '%hubspot%'
-            ) hb on ct.contact_pk = hb.contact_pk
+            ) hb
+            on ct.contact_pk = hb.contact_pk
         left join
             (
                 select contact_pk, contact_email
                 from
                     {{ ref("wh_contacts_dim") }},
                     unnest(all_contact_emails) as contact_email
-            ) ce on ct.contact_pk = ce.contact_pk
+            ) ce
+            on ct.contact_pk = ce.contact_pk
         where ct.company_id = c.company_id
     )
 select

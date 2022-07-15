@@ -1,6 +1,4 @@
 {% if var("crm_warehouse_companies_sources") and var("crm_warehouse_contact_sources") %}
-
-
 {{ config(alias="contact_companies_fact") }}
 
 with

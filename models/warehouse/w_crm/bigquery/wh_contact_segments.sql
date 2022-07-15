@@ -18,7 +18,8 @@ select
         when influencer_status is null and (pricing_views = 0 and casestudy_views = 0)
         then 'Visitor'
         when
-            influencer_status = 'Influencer' and (
+            influencer_status = 'Influencer'
+            and (
                 attribution_interest
                 + casestudy_views
                 + customer_journey_interest
@@ -29,12 +30,12 @@ select
                 + personas_interest
                 + ra_warehouse_interest
                 + segment_interest
-            ) > 0
+            )
+            > 0
         then 'Engaged Influencer'
         when
-            influencer_status = 'Champion' and (
-                pricing_views > 0 or casestudy_views > 0
-            )
+            influencer_status = 'Champion'
+            and (pricing_views > 0 or casestudy_views > 0)
         then 'Champion Prospect'
         else 'Contact'
     end as contact_segment
