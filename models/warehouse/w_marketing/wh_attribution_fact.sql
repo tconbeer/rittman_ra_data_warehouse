@@ -114,9 +114,7 @@ with
             sum(count_repeat_order_conversions) as count_repeat_order_conversions,
             sum(count_order_conversions) as count_order_conversions,
             sum(count_registration_conversions) as count_registration_conversions,
-            sum(count_registration_conversions) + sum(
-                count_first_order_conversions
-            )
+            sum(count_registration_conversions) + sum(count_first_order_conversions)
             + sum(count_repeat_order_conversions) as count_conversions,
             max(converted_ts) as converted_ts
         from converting_events
@@ -277,8 +275,8 @@ with
                             utm_campaign,
                             referrer_host,
                             first_page_url_host,
-                            split(
-                                net.reg_domain(referrer_host), '.') [offset (0)
+                            split(net.reg_domain(referrer_host), '.')[
+                                offset(0)
                             ] as referrer_domain,
                             channel,
                             case
@@ -421,15 +419,11 @@ with
     days_to_each_conversion as (
         select
             *,
-            session_day_number - max(
-                session_day_number
-            ) over (
+            session_day_number - max(session_day_number) over (
                 partition by blended_user_id, user_conversion_cycle
             ) as days_before_conversion,
             (
-                session_day_number - max(
-                    session_day_number
-                ) over (
+                session_day_number - max(session_day_number) over (
                     partition by blended_user_id, user_conversion_cycle
                 )
             )
@@ -437,9 +431,7 @@ with
             <= {{ var("attribution_lookback_days_window") }}
             as is_within_attribution_lookback_window,
             (
-                session_day_number - max(
-                    session_day_number
-                ) over (
+                session_day_number - max(session_day_number) over (
                     partition by blended_user_id, user_conversion_cycle
                 )
             )

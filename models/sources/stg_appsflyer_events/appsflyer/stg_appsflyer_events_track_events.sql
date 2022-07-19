@@ -31,7 +31,7 @@ with
             case
                 when lower(user_agent) like '%android%'
                 then 'Android'
-                else replace(split(user_agent, '(') [safe_offset(1)], ';', '')
+                else replace(split(user_agent, '(')[safe_offset(1)], ';', '')
             end as device,
             cast(af_siteid as {{ dbt_utils.type_string() }}) as site
         from source

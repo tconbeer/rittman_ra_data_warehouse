@@ -16,8 +16,8 @@ with
             concat(
                 '{{ var(' stg_jira_projects_id - prefix ') }}', accountid
             ) as contact_id,
-            split(displayname, ' ') [safe_offset(0)] as contact_first_name,
-            split(displayname, ' ') [safe_offset(1)] as contact_last_name,
+            split(displayname, ' ')[safe_offset(0)] as contact_first_name,
+            split(displayname, ' ')[safe_offset(1)] as contact_last_name,
             displayname as contact_name,
             cast(null as {{ dbt_utils.type_string() }}) as contact_job_title,
             emailaddress as contact_email,

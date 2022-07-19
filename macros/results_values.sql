@@ -9,7 +9,7 @@
         then
             {% if target.type == "bigquery" %}
             safe_cast(
-                replace(split('{{ res.status }}', '(') [offset (1)], ')', '') as numeric
+                replace(split('{{ res.status }}', '(')[offset(1)], ')', '') as numeric
             )
             {% elif target.type == "snowflake" %}
             try_cast(

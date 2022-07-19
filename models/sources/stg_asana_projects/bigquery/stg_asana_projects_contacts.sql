@@ -15,8 +15,8 @@ with
     renamed as (
         select
             concat('{{ var(' stg_asana_projects_id - prefix ') }}', gid) as contact_id,
-            split(name, ' ') [safe_offset(0)] as contact_first_name,
-            split(name, ' ') [safe_offset(1)] as contact_last_name,
+            split(name, ' ')[safe_offset(0)] as contact_first_name,
+            split(name, ' ')[safe_offset(1)] as contact_last_name,
             name as contact_name,
             cast(null as {{ dbt_utils.type_string() }}) as contact_job_title,
             email as contact_email,

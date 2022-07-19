@@ -71,19 +71,19 @@ from
                         from
                             table_as_json,
                             unnest(split(row, ',"')) as z,
-                            unnest( [split(z, ':') [safe_offset(0)]]) as column_name,
-                            unnest( [split(z, ':') [safe_offset(1)]]) as column_value
+                            unnest([split(z, ':')[safe_offset(0)]]) as column_name,
+                            unnest([split(z, ':')[safe_offset(1)]]) as column_value
                     ),
                     profile as (
                         select
-                            split(
-                                replace('{{ table }}', '`', ''), '.') [safe_offset(0)
+                            split(replace('{{ table }}', '`', ''), '.')[
+                                safe_offset(0)
                             ] as table_catalog,
-                            split(
-                                replace('{{ table }}', '`', ''), '.') [safe_offset(1)
+                            split(replace('{{ table }}', '`', ''), '.')[
+                                safe_offset(1)
                             ] as table_schema,
-                            split(
-                                replace('{{ table }}', '`', ''), '.') [safe_offset(2)
+                            split(replace('{{ table }}', '`', ''), '.')[
+                                safe_offset(2)
                             ] as table_name,
                             column_name,
                             count(*) as table_rows,
@@ -98,8 +98,8 @@ from
                             min(column_value) as _min_value,
                             max(column_value) as _max_value,
                             avg(safe_cast(column_value as numeric)) as _avg_value,
-                            approx_top_count(
-                                column_value, 1) [offset (0)
+                            approx_top_count(column_value, 1)[
+                                offset(0)
                             ] as _most_frequent_value,
                             min(
                                 length(safe_cast(column_value as string))
