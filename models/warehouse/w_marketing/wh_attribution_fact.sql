@@ -522,11 +522,11 @@ with
                         session_id = last_value(
                             if(
                                 is_within_attribution_lookback_window
-                                and (not conversion_session or {{
-                                        var(
-                                            "attribution_include_conversion_session"
-                                        )
-                                    }}),
+                                and (
+                                    not conversion_session
+                                    or
+                                    {{ var("attribution_include_conversion_session") }}
+                                ),
                                 session_id,
                                 null
                             ) ignore nulls
@@ -549,11 +549,11 @@ with
                         session_id = last_value(
                             if(
                                 is_within_attribution_lookback_window
-                                and (not conversion_session or {{
-                                        var(
-                                            "attribution_include_conversion_session"
-                                        )
-                                    }})
+                                and (
+                                    not conversion_session
+                                    or
+                                    {{ var("attribution_include_conversion_session") }}
+                                )
                                 and is_non_direct_channel,
                                 session_id,
                                 null
@@ -577,11 +577,11 @@ with
                         session_id = last_value(
                             if(
                                 is_within_attribution_lookback_window
-                                and (not conversion_session or {{
-                                        var(
-                                            "attribution_include_conversion_session"
-                                        )
-                                    }})
+                                and (
+                                    not conversion_session
+                                    or
+                                    {{ var("attribution_include_conversion_session") }}
+                                )
                                 and is_paid_channel,
                                 session_id,
                                 null
@@ -624,11 +624,11 @@ with
                         session_id = first_value(
                             if(
                                 is_within_attribution_lookback_window
-                                and (not conversion_session or {{
-                                        var(
-                                            "attribution_include_conversion_session"
-                                        )
-                                    }})
+                                and (
+                                    not conversion_session
+                                    or
+                                    {{ var("attribution_include_conversion_session") }}
+                                )
                                 and is_non_direct_channel,
                                 session_id,
                                 null
@@ -651,11 +651,11 @@ with
                         session_id = first_value(
                             if(
                                 is_within_attribution_lookback_window
-                                and (not conversion_session or {{
-                                        var(
-                                            "attribution_include_conversion_session"
-                                        )
-                                    }})
+                                and (
+                                    not conversion_session
+                                    or
+                                    {{ var("attribution_include_conversion_session") }}
+                                )
                                 and is_paid_channel,
                                 session_id,
                                 null
