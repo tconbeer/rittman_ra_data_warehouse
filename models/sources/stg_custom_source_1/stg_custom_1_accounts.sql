@@ -16,7 +16,7 @@ with
                         from source_of_ip_addresses, unnest(generate_array(9, 32)) mask
                         where byte_length(net.safe_ip_from_string(ip)) = 4
                     )
-                join `` using(network_bin, mask)
+                join `` using (network_bin, mask)
             )
         group by 1
         order by 2 desc {{ source("custom_source_1", "s_accounts") }}

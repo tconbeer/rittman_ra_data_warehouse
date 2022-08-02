@@ -81,8 +81,8 @@ with
             joined.*,
             coalesce(invoices.company_pk, bank_transactions.contact_id) as company_pk
         from joined
-        left join invoices using(invoice_id)
-        left join bank_transactions using(bank_transaction_id)
+        left join invoices using (invoice_id)
+        left join bank_transactions using (bank_transaction_id)
 
 
     ),
@@ -90,7 +90,7 @@ with
 
         select first_company.*, companies.company_name
         from first_company
-        left join companies using(company_pk)
+        left join companies using (company_pk)
 
     )
 

@@ -58,7 +58,7 @@ with
                 {{ dbt_utils.get_url_parameter(url_field, "utm_term") }}
             ) as utm_term
         from base
-        left join url_tags_pivoted using(_fivetran_id, creative_id)
+        left join url_tags_pivoted using (_fivetran_id, creative_id)
 
     )
 

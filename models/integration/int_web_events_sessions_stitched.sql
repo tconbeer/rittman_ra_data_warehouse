@@ -33,7 +33,7 @@ with
             coalesce(id_stitching.user_id, sessions.visitor_id) as blended_user_id
 
         from sessions
-        left join id_stitching using(visitor_id)
+        left join id_stitching using (visitor_id)
 
     )
 

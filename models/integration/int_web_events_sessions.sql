@@ -62,7 +62,7 @@ with
 
         from sessions
 
-        {% if is_incremental() %} left join agg using(blended_user_id) {% endif %}
+        {% if is_incremental() %} left join agg using (blended_user_id) {% endif %}
 
 
     )
