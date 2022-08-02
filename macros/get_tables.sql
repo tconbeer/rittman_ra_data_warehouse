@@ -2,8 +2,7 @@
 
 {%- call statement('tables', fetch_result=True) %}
 
-select
-            distinct table_schema || '.' || table_name as ref
+select distinct table_schema || '.' || table_name as ref
 from {{ schema }}.information_schema.tables
 where
     table_schema = '{{ schema }}'
