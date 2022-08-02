@@ -1,25 +1,11 @@
-{% if var("subscriptions_warehouse_sources")  %}
-{{
-    config(
-        alias='customers_dim'
-    )
-}}
+{% if var("subscriptions_warehouse_sources") %}
+{{ config(alias="customers_dim") }}
 
 
-with customers as
-  (
-    SELECT *
-    FROM {{ ref('int_customers') }}
-  )
-SELECT
+with customers as (select * from {{ ref("int_customers") }})
+select generate_uuid() as customer_pk, c.*
+from customers c
 
-    GENERATE_UUID() as customer_pk,
-    c.*
-FROM
-   customers c
+{% else %} {{ config(enabled=false) }}
 
-   {% else %}
-
-      {{config(enabled=false)}}
-
-   {% endif %}
+{% endif %}
