@@ -71,7 +71,10 @@
         "name": "business_manager_primary_page",
         "datatype": dbt_utils.type_string(),
     },
-    {"name": "business_manager_timezone_id", "datatype": dbt_utils.type_int()},
+    {
+        "name": "business_manager_timezone_id",
+        "datatype": dbt_utils.type_int(),
+    },
     {
         "name": "business_manager_update_time",
         "datatype": dbt_utils.type_timestamp(),
@@ -102,7 +105,10 @@
     {"name": "is_prepay_account", "datatype": "boolean"},
     {"name": "is_tax_id_required", "datatype": "boolean"},
     {"name": "media_agency", "datatype": dbt_utils.type_int()},
-    {"name": "min_campaign_group_spend_cap", "datatype": dbt_utils.type_int()},
+    {
+        "name": "min_campaign_group_spend_cap",
+        "datatype": dbt_utils.type_int(),
+    },
     {"name": "min_daily_budget", "datatype": dbt_utils.type_int()},
     {"name": "name", "datatype": dbt_utils.type_string()},
     {"name": "next_bill_date", "datatype": dbt_utils.type_timestamp()},

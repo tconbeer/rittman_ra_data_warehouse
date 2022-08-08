@@ -12,7 +12,10 @@
     },
     {"name": "advertising_channel_type", "datatype": dbt_utils.type_string()},
     {"name": "base_campaign_id", "datatype": dbt_utils.type_int()},
-    {"name": "bidding_strategy_bid_ceiling", "datatype": dbt_utils.type_int()},
+    {
+        "name": "bidding_strategy_bid_ceiling",
+        "datatype": dbt_utils.type_int(),
+    },
     {
         "name": "bidding_strategy_bid_changes_for_raises_only",
         "datatype": "boolean",

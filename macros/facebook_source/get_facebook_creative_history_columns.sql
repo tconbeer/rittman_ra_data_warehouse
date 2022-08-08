@@ -6,7 +6,10 @@
     {"name": "account_id", "datatype": dbt_utils.type_int()},
     {"name": "actor_id", "datatype": dbt_utils.type_int()},
     {"name": "applink_treatment", "datatype": dbt_utils.type_string()},
-    {"name": "asset_feed_spec_link_urls", "datatype": dbt_utils.type_string()},
+    {
+        "name": "asset_feed_spec_link_urls",
+        "datatype": dbt_utils.type_string(),
+    },
     {"name": "body", "datatype": dbt_utils.type_string()},
     {
         "name": "branded_content_sponsor_page_id",
@@ -14,8 +17,14 @@
     },
     {"name": "call_to_action_type", "datatype": dbt_utils.type_string()},
     {"name": "carousel_ad_link", "datatype": dbt_utils.type_string()},
-    {"name": "effective_instagram_story_id", "datatype": dbt_utils.type_int()},
-    {"name": "effective_object_story_id", "datatype": dbt_utils.type_string()},
+    {
+        "name": "effective_instagram_story_id",
+        "datatype": dbt_utils.type_int(),
+    },
+    {
+        "name": "effective_object_story_id",
+        "datatype": dbt_utils.type_string(),
+    },
     {"name": "id", "datatype": dbt_utils.type_int()},
     {"name": "image_file", "datatype": dbt_utils.type_string()},
     {"name": "image_hash", "datatype": dbt_utils.type_string()},

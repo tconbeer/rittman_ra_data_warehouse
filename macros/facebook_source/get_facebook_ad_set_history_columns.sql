@@ -129,7 +129,10 @@
         "name": "targeting_publisher_platforms",
         "datatype": dbt_utils.type_string(),
     },
-    {"name": "targeting_user_adclusters", "datatype": dbt_utils.type_string()},
+    {
+        "name": "targeting_user_adclusters",
+        "datatype": dbt_utils.type_string(),
+    },
     {"name": "targeting_user_device", "datatype": dbt_utils.type_string()},
     {"name": "targeting_user_os", "datatype": dbt_utils.type_string()},
     {
