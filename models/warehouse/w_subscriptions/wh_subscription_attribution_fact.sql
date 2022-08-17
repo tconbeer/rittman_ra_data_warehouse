@@ -97,7 +97,8 @@ with
             end as event,
             case
                 when
-                    s.session_start_ts between c.created_account_ts and coalesce(
+                    s.session_start_ts
+                    between c.created_account_ts and coalesce(
                         c.converted_ts, s.session_end_ts
                     )
                 then true
