@@ -520,7 +520,8 @@ with
                 0,
                 case
                     when
-                        session_id = last_value(
+                        session_id
+                        = last_value(
                             if(
                                 is_within_attribution_lookback_window
                                 and (
@@ -547,7 +548,8 @@ with
                 0,
                 case
                     when
-                        session_id = last_value(
+                        session_id
+                        = last_value(
                             if(
                                 is_within_attribution_lookback_window
                                 and (
@@ -575,7 +577,8 @@ with
                 0,
                 case
                     when
-                        session_id = last_value(
+                        session_id
+                        = last_value(
                             if(
                                 is_within_attribution_lookback_window
                                 and (
@@ -603,7 +606,8 @@ with
                 0,
                 case
                     when
-                        session_id = first_value(
+                        session_id
+                        = first_value(
                             if(
                                 is_within_attribution_lookback_window, session_id, null
                             ) ignore nulls
@@ -622,7 +626,8 @@ with
                 0,
                 case
                     when
-                        session_id = first_value(
+                        session_id
+                        = first_value(
                             if(
                                 is_within_attribution_lookback_window
                                 and (
@@ -649,7 +654,8 @@ with
                 0,
                 case
                     when
-                        session_id = first_value(
+                        session_id
+                        = first_value(
                             if(
                                 is_within_attribution_lookback_window
                                 and (

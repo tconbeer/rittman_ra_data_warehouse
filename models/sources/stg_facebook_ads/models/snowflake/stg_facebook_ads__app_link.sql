@@ -36,9 +36,7 @@ with
             required_fields,
             lateral flatten(input => template_app_link_spec_{{ app }}) as element
 
-    {% endfor %}
-
-    ),
+    {% endfor %}),
     unioned as (
 
         select *

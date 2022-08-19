@@ -50,9 +50,7 @@ with
             json_extract_path_text(element, 'template_page') as template_page
         from flattened_{{ app }}
 
-    {% endfor %}
-
-    ),
+    {% endfor %}),
     unioned as (
 
         select *

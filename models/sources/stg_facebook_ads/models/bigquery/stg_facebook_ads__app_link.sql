@@ -34,9 +34,7 @@ with
         left join
             unnest(json_extract_array(template_app_link_spec_{{ app }})) as element
 
-    {% endfor %}
-
-    ),
+    {% endfor %}),
     unioned as (
 
         select *
