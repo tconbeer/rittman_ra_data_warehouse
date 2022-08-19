@@ -52,7 +52,8 @@ with
                 )
             }}
             as quarters_since_first_invoice,
-            amount - ifnull(cast(tax_amount as float64), 0)
+            amount
+            - ifnull(cast(tax_amount as float64), 0)
             - ifnull(cast(e.total_rechargeable_expenses as float64), 0) as net_amount,
             ifnull(a.total_amount_billed, 0) as total_amount_billed,
             ifnull(a.services_amount_billed, 0) as services_amount_billed,
@@ -62,9 +63,8 @@ with
             ifnull(a.expenses_amount_billed, 0) as expenses_amount_billed,
             ifnull(a.support_amount_billed, 0) as support_amount_billed,
             ifnull(a.tax_billed, 0) as tax_billed,
-            ifnull(a.services_amount_billed, 0) + ifnull(
-                a.license_referral_fee_amount_billed, 0
-            )
+            ifnull(a.services_amount_billed, 0)
+            + ifnull(a.license_referral_fee_amount_billed, 0)
             + ifnull(a.support_amount_billed, 0) as revenue_amount_billed,
             project_id,
             invoice_line_item_id

@@ -19,9 +19,8 @@ from transactions
 -- this filter will only be applied on an incremental run
 where
     transaction_created_ts > (select max(transaction_created_ts) from {{ this }})
-    or transaction_last_modified_ts > (
-        select max(transaction_last_modified_ts) from {{ this }}
-    )
+    or transaction_last_modified_ts
+    > (select max(transaction_last_modified_ts) from {{ this }})
 {% endif %}
 
 {% else %} {{ config(enabled=false) }}

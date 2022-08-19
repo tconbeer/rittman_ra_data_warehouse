@@ -223,24 +223,20 @@ from
             case
                 when
                     (
-                        first_order_total_revenue = round(
-                            first_order_first_click_attrib_revenue
-                        )
+                        first_order_total_revenue
+                        = round(first_order_first_click_attrib_revenue)
                     )
                     and (
-                        first_order_total_revenue = round(
-                            first_order_last_click_attrib_revenue
-                        )
+                        first_order_total_revenue
+                        = round(first_order_last_click_attrib_revenue)
                     )
                     and (
-                        first_order_total_revenue = round(
-                            first_order_even_click_attrib_revenue
-                        )
+                        first_order_total_revenue
+                        = round(first_order_even_click_attrib_revenue)
                     )
                     and (
-                        first_order_total_revenue = round(
-                            first_order_time_decay_attrib_revenue
-                        )
+                        first_order_total_revenue
+                        = round(first_order_time_decay_attrib_revenue)
                     )
                 then true
                 else false
@@ -252,24 +248,20 @@ from
             case
                 when
                     (
-                        repeat_order_total_revenue = round(
-                            repeat_order_first_click_attrib_revenue
-                        )
+                        repeat_order_total_revenue
+                        = round(repeat_order_first_click_attrib_revenue)
                     )
                     and (
-                        repeat_order_total_revenue = round(
-                            repeat_order_last_click_attrib_revenue
-                        )
+                        repeat_order_total_revenue
+                        = round(repeat_order_last_click_attrib_revenue)
                     )
                     and (
-                        repeat_order_total_revenue = round(
-                            repeat_order_even_click_attrib_revenue
-                        )
+                        repeat_order_total_revenue
+                        = round(repeat_order_even_click_attrib_revenue)
                     )
                     and (
-                        repeat_order_total_revenue = round(
-                            repeat_order_time_decay_attrib_revenue
-                        )
+                        repeat_order_total_revenue
+                        = round(repeat_order_time_decay_attrib_revenue)
                     )
                 then true
                 else false

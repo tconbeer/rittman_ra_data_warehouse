@@ -114,7 +114,8 @@ with
             sum(count_repeat_order_conversions) as count_repeat_order_conversions,
             sum(count_order_conversions) as count_order_conversions,
             sum(count_registration_conversions) as count_registration_conversions,
-            sum(count_registration_conversions) + sum(count_first_order_conversions)
+            sum(count_registration_conversions)
+            + sum(count_first_order_conversions)
             + sum(count_repeat_order_conversions) as count_conversions,
             max(converted_ts) as converted_ts
         from converting_events

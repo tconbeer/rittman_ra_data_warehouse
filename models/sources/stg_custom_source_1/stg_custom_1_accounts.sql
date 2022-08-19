@@ -10,9 +10,8 @@ with
                     (
                         select
                             *,
-                            net.safe_ip_from_string(ip) & net.ip_net_mask(
-                                4, mask
-                            ) network_bin
+                            net.safe_ip_from_string(ip)
+                            & net.ip_net_mask(4, mask) network_bin
                         from source_of_ip_addresses, unnest(generate_array(9, 32)) mask
                         where byte_length(net.safe_ip_from_string(ip)) = 4
                     )

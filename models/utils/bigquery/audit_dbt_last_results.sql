@@ -12,9 +12,8 @@ from
             ) as diff_from_previous_load_ts,
             round(
                 safe_divide(
-                    row_count - (
-                        lag(row_count, 1) over (partition by object order by load_ts)
-                    ),
+                    row_count
+                    - (lag(row_count, 1) over (partition by object order by load_ts)),
                     (lag(row_count, 1) over (partition by object order by load_ts))
                 ),
                 4

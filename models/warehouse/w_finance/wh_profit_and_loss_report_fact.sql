@@ -35,9 +35,8 @@ with
         from calendar
         left join
             ledger
-            on calendar.date_month = cast(
-                {{ dbt_utils.date_trunc("month", "ledger.journal_date") }} as date
-            )
+            on calendar.date_month
+            = cast({{ dbt_utils.date_trunc("month", "ledger.journal_date") }} as date)
         where ledger.account_class in ('REVENUE', 'EXPENSE') {{ dbt_utils.group_by(7) }}
 
     )

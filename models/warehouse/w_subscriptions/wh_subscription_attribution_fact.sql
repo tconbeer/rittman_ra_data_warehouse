@@ -97,8 +97,7 @@ with
             end as event,
             case
                 when
-                    s.session_start_ts
-                    between c.created_account_ts and coalesce(
+                    s.session_start_ts between c.created_account_ts and coalesce(
                         c.converted_ts, s.session_end_ts
                     )
                 then true
@@ -180,9 +179,11 @@ with
                     )
                     = 0,
                     0,
-                    safe_cast(weights as float64) / sum(
-                        safe_cast(weights as float64)
-                    ) over (partition by blended_user_id)
+                    safe_cast(
+                        weights as float64
+                    ) / sum(safe_cast(weights as float64)) over (
+                        partition by blended_user_id
+                    )
                 ),
                 2
             ) as time_decay_attrib_pct

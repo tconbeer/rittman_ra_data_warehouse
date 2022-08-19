@@ -230,14 +230,13 @@ with
     joined as (
         select
             d.*,
-            d.days_in_deal_stage_0 + coalesce(d.days_in_deal_stage_1, 0) + coalesce(
-                d.days_in_deal_stage_2,
-                0
-            ) + coalesce(d.days_in_deal_stage_3, 0) + coalesce(
-                d.days_in_deal_stage_4,
-                0
-            ) + coalesce(d.days_in_deal_stage_5, 0) + coalesce(d.days_in_deal_stage_6, 0
-            )
+            d.days_in_deal_stage_0
+            + coalesce(d.days_in_deal_stage_1, 0)
+            + coalesce(d.days_in_deal_stage_2, 0)
+            + coalesce(d.days_in_deal_stage_3, 0)
+            + coalesce(d.days_in_deal_stage_4, 0)
+            + coalesce(d.days_in_deal_stage_5, 0)
+            + coalesce(d.days_in_deal_stage_6, 0)
             + coalesce(d.days_in_deal_stage_7, 0) as days_in_pipeline,
             p.pipeline_label,
             p.pipeline_display_order,

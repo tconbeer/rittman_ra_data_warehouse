@@ -54,14 +54,12 @@ with
                                         from {{ ref("companies_merge_list") }} m
                                         join
                                             companies_pre_merged c1
-                                            on m.old_company_id in unnest(
-                                                c1.all_company_ids
-                                            )
+                                            on m.old_company_id
+                                            in unnest(c1.all_company_ids)
                                         join
                                             companies_pre_merged c2
-                                            on m.company_id in unnest(
-                                                c2.all_company_ids
-                                            )
+                                            on m.company_id
+                                            in unnest(c2.all_company_ids)
                                     )
                                 union all
                                 select *
@@ -73,14 +71,12 @@ with
                                         from {{ ref("companies_merge_list") }} m
                                         join
                                             companies_pre_merged c1
-                                            on m.old_company_id in unnest(
-                                                c1.all_company_ids
-                                            )
+                                            on m.old_company_id
+                                            in unnest(c1.all_company_ids)
                                         join
                                             companies_pre_merged c2
-                                            on m.company_id in unnest(
-                                                c2.all_company_ids
-                                            )
+                                            on m.company_id
+                                            in unnest(c2.all_company_ids)
                                     )
                             )
                         group by 1
