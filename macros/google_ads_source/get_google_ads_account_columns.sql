@@ -11,9 +11,7 @@
     {"name": "manager_customer_id", "datatype": dbt_utils.type_int()},
     {"name": "name", "datatype": dbt_utils.type_string()},
     {"name": "sequence_id", "datatype": dbt_utils.type_int()},
-    {"name": "test_account", "datatype": "boolean"}
-] %}
-
-{{ return(columns) }}
+    {"name": "test_account", "datatype": "boolean"},
+] %} {{ return(columns) }}
 
 {% endmacro %}
