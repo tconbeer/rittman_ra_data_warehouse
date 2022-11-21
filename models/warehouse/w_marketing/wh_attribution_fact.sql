@@ -448,7 +448,7 @@ with
                 is_within_attribution_time_decay_days_window,
                 safe_divide
                 (
-                    pow(2, (days_before_conversion -1)),
+                    pow(2, (days_before_conversion - 1)),
                     ({{ var("attribution_time_decay_days_window") }})
                 ),
                 null
@@ -457,7 +457,7 @@ with
                 conversion_session
                 and not {{ var("attribution_include_conversion_session") }},
                 0,
-                pow(2, (days_before_conversion -1))
+                pow(2, (days_before_conversion - 1))
             ) as weighting,
             if(
                 conversion_session
@@ -485,7 +485,7 @@ with
                 0,
                 safe_divide
                 (
-                    pow(2, (days_before_conversion -1)),
+                    pow(2, (days_before_conversion - 1)),
                     count
                     (
                         case
@@ -703,7 +703,7 @@ with
                                 )
                                 {% if var("attribution_include_conversion_session") %}
                                 + 0
-                                {% else %} -1
+                                {% else %} - 1
                                 {% endif %}
                             )
                         )

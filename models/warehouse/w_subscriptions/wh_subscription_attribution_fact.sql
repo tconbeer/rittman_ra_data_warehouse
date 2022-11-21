@@ -161,7 +161,8 @@ with
                 then
                     safe_cast(
                         round(
-                            1.1 -1 / row_number() over (partition by blended_user_id), 2
+                            1.1 - 1 / row_number() over (partition by blended_user_id),
+                            2
                         ) as string
                     )
                 else 'null'
