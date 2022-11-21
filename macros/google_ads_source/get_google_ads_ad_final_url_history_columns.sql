@@ -6,9 +6,7 @@
     {"name": "ad_id", "datatype": dbt_utils.type_int()},
     {"name": "sequence_id", "datatype": dbt_utils.type_int()},
     {"name": "updated_at", "datatype": dbt_utils.type_timestamp()},
-    {"name": "url", "datatype": dbt_utils.type_string()}
-] %}
-
-{{ return(columns) }}
+    {"name": "url", "datatype": dbt_utils.type_string()},
+] %} {{ return(columns) }}
 
 {% endmacro %}
