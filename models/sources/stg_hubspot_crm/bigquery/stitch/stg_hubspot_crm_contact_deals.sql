@@ -3,6 +3,8 @@
 {% if "hubspot_crm" in var("crm_warehouse_contact_sources") %}
 {% if "hubspot_crm" in var("marketing_warehouse_deal_sources") %}
 {% if var("stg_hubspot_crm_etl") == "stitch" %}
+
+
 with
     source as (
         {{

@@ -1,4 +1,6 @@
 {% if var("marketing_warehouse_deal_sources") %}
+
+
 with
     t_deals_merge_list as (
         {% for source in var("marketing_warehouse_deal_sources") %}

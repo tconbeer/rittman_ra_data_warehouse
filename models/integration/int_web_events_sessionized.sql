@@ -58,6 +58,8 @@ with
     ),
 
     new_sessions as (
+
+
         select
             *,
             case
@@ -70,6 +72,8 @@ with
     ),
 
     session_numbers as (
+
+
         select
 
             *,

@@ -1,4 +1,6 @@
 {% if var("finance_warehouse_payment_sources") %}
+
+
 with
     t_chart_of_accounts_merge_list as (
         {% for source in var("finance_warehouse_payment_sources") %}

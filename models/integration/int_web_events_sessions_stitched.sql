@@ -1,4 +1,7 @@
 {% if var("product_warehouse_event_sources") %}
+
+
+
 with
     sessions as (
 

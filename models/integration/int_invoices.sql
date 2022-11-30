@@ -1,4 +1,6 @@
 {% if var("finance_warehouse_invoice_sources") %}
+
+
 with
     t_invoices_merge_list as (
 

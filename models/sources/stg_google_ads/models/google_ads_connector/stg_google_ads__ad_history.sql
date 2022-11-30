@@ -2,6 +2,8 @@
 {% if var("marketing_warehouse_ad_sources") %}
 {% if "google_ads" in var("marketing_warehouse_ad_sources") %}
 {% if var("google_ads_api_source") == "google_ads" %}
+
+
 with
     base as (select * from {{ ref("stg_google_ads__ad_history_tmp") }}),
 

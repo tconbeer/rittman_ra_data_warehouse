@@ -1,4 +1,7 @@
 {% if var("crm_warehouse_conversations_sources") %}
+
+
+
 with
     conversations_merge_list as (
         {% for source in var("crm_warehouse_conversations_sources") %}

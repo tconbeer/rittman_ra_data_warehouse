@@ -1,6 +1,8 @@
 {% if target.type == "bigquery" or target.type == "snowflake" or target.type == "redshift" %}
 {% if var("projects_warehouse_delivery_sources") %}
 {% if "jira_projects" in var("projects_warehouse_delivery_sources") %}
+
+
 with
     source as (
         {{

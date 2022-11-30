@@ -1,4 +1,6 @@
 {% if var("finance_warehouse_journal_sources") %}
+
+
 with
     journal_merge_list as (
         {% for source in var("finance_warehouse_journal_sources") %}

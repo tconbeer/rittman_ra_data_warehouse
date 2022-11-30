@@ -1,6 +1,8 @@
 {{ config(enabled=target.type == "bigquery") }}
 {% if var("product_warehouse_usage_sources") %}
 {% if "bigquery_usage" in var("product_warehouse_usage_sources") %}
+
+
 with
     source as (
         select *
