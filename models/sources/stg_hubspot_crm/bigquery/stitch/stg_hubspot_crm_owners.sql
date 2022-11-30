@@ -1,25 +1,36 @@
-{% if target.type == 'bigquery' %}
+{% if target.type == "bigquery" %}
 {% if var("marketing_warehouse_deal_sources") %}
-{% if 'hubspot_crm' in var("marketing_warehouse_deal_sources") %}
-{% if var("stg_hubspot_crm_etl") == 'stitch' %}
+{% if "hubspot_crm" in var("marketing_warehouse_deal_sources") %}
+{% if var("stg_hubspot_crm_etl") == "stitch" %}
 
 
-WITH source as (
-  {{ filter_stitch_relation(relation=source('stitch_hubspot_crm','owners'),unique_column='ownerid') }}
+with
+    source as (
+        {{
+            filter_stitch_relation(
+                relation=source("stitch_hubspot_crm", "owners"),
+                unique_column="ownerid",
+            )
+        }}
 
-),
-renamed as (
-    select
-      safe_cast (ownerid as int64) as owner_id,
-      concat(concat(firstname,' '),lastname) as owner_full_name,
-      firstname as owner_first_name,
-      lastname as owner_last_name,
-      email as owner_email
-    from source
-)
-select * from renamed
+    ),
+    renamed as (
+        select
+            safe_cast(ownerid as int64) as owner_id,
+            concat(concat(firstname, ' '), lastname) as owner_full_name,
+            firstname as owner_first_name,
+            lastname as owner_last_name,
+            email as owner_email
+        from source
+    )
+select *
+from renamed
 
-{% else %} {{config(enabled=false)}} {% endif %}
-{% else %} {{config(enabled=false)}} {% endif %}
-{% else %} {{config(enabled=false)}} {% endif %}
-{% else %} {{config(enabled=false)}} {% endif %}
+{% else %} {{ config(enabled=false) }}
+{% endif %}
+{% else %} {{ config(enabled=false) }}
+{% endif %}
+{% else %} {{ config(enabled=false) }}
+{% endif %}
+{% else %} {{ config(enabled=false) }}
+{% endif %}
