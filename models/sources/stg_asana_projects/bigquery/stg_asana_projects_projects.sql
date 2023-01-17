@@ -31,7 +31,6 @@ with
             modified_at as project_modified_at_ts,
         from source
 
-
     )
 select *
 from renamed

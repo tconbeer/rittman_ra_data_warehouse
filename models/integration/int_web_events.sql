@@ -19,7 +19,6 @@ with
         from {{ ref("int_order_conversions") }}
     )
 
-
 select
     e.*,
     cast(
@@ -40,7 +39,6 @@ left join
         end as {{ dbt_utils.type_string() }}
     )
     = o.order_id
-
 
 {% else %} {{ config(enabled=false) }}
 

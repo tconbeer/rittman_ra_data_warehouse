@@ -10,7 +10,6 @@ with
         from base
         where url_tags is not null
 
-
     ),
     flattened_url_tags as (
 
@@ -21,7 +20,6 @@ with
             url_tags.value:value::string as value,
             url_tags.value:type::string as type
         from required_fields, lateral flatten(input => url_tags) as url_tags
-
 
     )
 

@@ -26,7 +26,6 @@ with
             sum(coalesce(spend, 0)) as spend
         from base {{ dbt_utils.group_by(16) }}
 
-
     )
 
 select *

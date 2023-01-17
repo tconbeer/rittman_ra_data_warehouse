@@ -1,7 +1,6 @@
 {% if var("ecommerce_warehouse_customer_cohorts_sources") %}
 {{ config(materialized="table") }}
 
-
 with
     customer_cohorts_merge_list as (
         {% for source in var("ecommerce_warehouse_customer_cohorts_sources") %}
@@ -18,8 +17,6 @@ with
 select *
 from customer_cohorts_merge_list
 
-
 {% else %} {{ config(enabled=false) }}
-
 
 {% endif %}

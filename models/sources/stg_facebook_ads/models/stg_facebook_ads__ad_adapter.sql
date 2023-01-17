@@ -80,7 +80,6 @@ with
             = cast(accounts.account_id as {{ dbt_utils.type_bigint() }})
             {{ dbt_utils.group_by(19) }}
 
-
     )
 
 select *

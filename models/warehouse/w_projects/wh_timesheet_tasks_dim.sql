@@ -1,7 +1,6 @@
 {% if var("projects_warehouse_timesheet_sources") %}
 {{ config(unique_key="timesheet_task_pk", alias="timesheet_tasks_dim") }}
 
-
 with
     tasks as (
         select {{ dbt_utils.star(from=ref("int_timesheet_tasks")) }}

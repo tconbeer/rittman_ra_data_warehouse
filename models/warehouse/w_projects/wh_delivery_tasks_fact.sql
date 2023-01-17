@@ -1,7 +1,6 @@
 {% if var("projects_warehouse_delivery_sources") %}
 {{ config(unique_key="delivery_task_pk", alias="delivery_tasks_fact") }}
 
-
 with
     tasks as (
         select {{ dbt_utils.star(from=ref("int_delivery_tasks")) }}

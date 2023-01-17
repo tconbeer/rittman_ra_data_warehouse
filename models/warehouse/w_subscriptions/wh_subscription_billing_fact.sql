@@ -2,7 +2,6 @@
 
 {{ config(alias="subscription_billing_fact") }}
 
-
 with
     subscriptions as (
         select {{ dbt_utils.star(from=ref("wh_subscriptions_fact")) }}

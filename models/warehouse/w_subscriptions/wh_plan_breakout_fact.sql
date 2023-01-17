@@ -1,7 +1,6 @@
 {% if var("subscriptions_warehouse_sources") %}
 {{ config(alias="plan_breakout_fact") }}
 
-
 with
     plans as (select * from {{ ref("wh_plans_dim") }}),
     plan_breakouts as (select * from {{ ref("int_plan_breakout_metrics") }})

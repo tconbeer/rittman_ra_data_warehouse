@@ -2,7 +2,6 @@
 
 {{ config(unique_key="payment_pk", alias="payments_fact") }}
 
-
 with
     payments as (select * from {{ ref("int_payments") }}),
     companies_dim as (select * from {{ ref("wh_companies_dim") }}),

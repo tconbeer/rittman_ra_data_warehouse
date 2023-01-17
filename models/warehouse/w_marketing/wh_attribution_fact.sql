@@ -3,7 +3,6 @@
 ) %}
 {{ config(alias="attribution_fact") }}
 
-
 with
     events_filtered as (
         select *

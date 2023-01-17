@@ -183,5 +183,4 @@ from merged
 
 {% else %} {{ config(enabled=false) }}
 
-
 {% endif %}

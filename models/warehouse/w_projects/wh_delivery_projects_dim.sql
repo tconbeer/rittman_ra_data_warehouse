@@ -1,7 +1,6 @@
 {% if var("projects_warehouse_delivery_sources") %}
 {{ config(unique_key="delivery_projects_pk", alias="delivery_projects_dim") }}
 
-
 with
     delivery_projects as (select * from {{ ref("int_delivery_projects") }}),
     {% if target.type == "bigquery" %}

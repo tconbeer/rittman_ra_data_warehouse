@@ -2,14 +2,12 @@
 {% if var("marketing_warehouse_ad_sources") %}
 {% if "facebook_ads" in var("marketing_warehouse_ad_sources") %}
 
-
 with
     base as (select * from {{ ref("stg_facebook_ads__creative_history") }}),
     numbers as (select * from {{ ref("utils__facebook_ads__numbers") }}),
     required_fields as (
 
         select _fivetran_id, creative_id, url_tags from base where url_tags is not null
-
 
     ),
     flattened_url_tags as (
@@ -24,7 +22,6 @@ with
         inner join
             numbers
             on json_array_length(required_fields.url_tags) >= numbers.generated_number
-
 
     ),
     extracted_fields as (

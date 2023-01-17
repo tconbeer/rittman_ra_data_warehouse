@@ -21,7 +21,6 @@ with
 select *
 from t_contact_deals_list
 
-
 {% else %} {{ config(enabled=false) }}
 {% endif %}
 {% else %} {{ config(enabled=false) }}

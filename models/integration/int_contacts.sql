@@ -148,5 +148,4 @@ from contacts
 
 {% else %} {{ config(enabled=false) }}
 
-
 {% endif %}

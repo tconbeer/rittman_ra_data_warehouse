@@ -2,7 +2,6 @@
 {% if var("marketing_warehouse_ad_sources") %}
 {% if "facebook_ads" in var("marketing_warehouse_ad_sources") %}
 
-
 with
     base as (select * from {{ ref("stg_facebook_ads__creative_history") }}),
     required_fields as (

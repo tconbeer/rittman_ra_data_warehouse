@@ -2,7 +2,6 @@
 {% if var("product_warehouse_event_sources") %}
 {% if "segment_events_track" in var("product_warehouse_event_sources") %}
 
-
 with
     source as (select * from {{ source("segment", "tracks") }}),
 

@@ -1,6 +1,5 @@
 {% if var("marketing_warehouse_ad_campaign_sources") %}
 
-
 with
     ad_campaign_performance as (
         select
@@ -18,6 +17,5 @@ select *
 from ad_campaign_performance
 
 {% else %} {{ config(enabled=false) }}
-
 
 {% endif %}

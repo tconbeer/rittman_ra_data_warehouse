@@ -3,7 +3,6 @@
 {% if "google_ads" in var("marketing_warehouse_ad_sources") %}
 {% if var("google_ads_api_source") == "adwords" %}
 
-
 select * from {{ source("adwords", "click_performance") }}
 
 {% else %} {{ config(enabled=false) }}

@@ -18,5 +18,4 @@ from ad_group_performance
 
 {% else %} {{ config(enabled=false) }}
 
-
 {% endif %}

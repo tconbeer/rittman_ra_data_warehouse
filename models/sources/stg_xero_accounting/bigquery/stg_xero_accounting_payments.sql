@@ -4,7 +4,6 @@
 
 {% if var("stg_xero_accounting_etl") == "fivetran" %}
 
-
 with
     source as (select * from {{ source("fivetran_xero_accounting", "payment") }}),
     renamed as (
@@ -37,8 +36,6 @@ with
 {% endif %}
 select *
 from renamed
-
-
 
 {% else %} {{ config(enabled=false) }}
 {% endif %}

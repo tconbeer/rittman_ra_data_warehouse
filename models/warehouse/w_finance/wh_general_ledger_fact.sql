@@ -84,7 +84,6 @@ with
         left join invoices using (invoice_id)
         left join bank_transactions using (bank_transaction_id)
 
-
     ),
     second_company as (
 
@@ -96,7 +95,6 @@ with
 
 select *
 from joined
-
 
 {% else %} {{ config(enabled=false) }}
 {% endif %}

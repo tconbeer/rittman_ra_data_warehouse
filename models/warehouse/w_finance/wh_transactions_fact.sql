@@ -9,7 +9,6 @@
     )
 }}
 
-
 with transactions as (select * from {{ ref("int_transactions") }})
 
 select {{ dbt_utils.surrogate_key(["transaction_id"]) }} as transaction_pk, *

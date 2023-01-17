@@ -2,7 +2,6 @@
 
 {{ config(unique_key="invoice_pk", alias="invoices_fact") }}
 
-
 with
     invoices as (select * from {{ ref("int_invoices") }}),
     companies_dim as (select * from {{ ref("wh_companies_dim") }})

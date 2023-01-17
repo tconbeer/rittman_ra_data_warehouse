@@ -62,7 +62,6 @@ with
 select *
 from joined
 
-
 {% else %} {{ config(enabled=false) }}
 {% endif %}
 {% else %} {{ config(enabled=false) }}

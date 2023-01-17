@@ -126,5 +126,4 @@ from joined
 
 {% else %} {{ config(enabled=false) }}
 
-
 {% endif %}

@@ -1,7 +1,5 @@
 {% if var("product_warehouse_event_sources") %}
 
-
-
 with
     sessions as (
 
@@ -51,8 +49,6 @@ select
     }}
     as mins_between_sessions,
     case when events = 1 then true else false end as is_bounced_session
-
-
 
 from joined
 

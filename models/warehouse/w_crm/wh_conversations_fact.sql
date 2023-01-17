@@ -4,7 +4,6 @@
 
 {{ config(alias="conversations_fact") }}
 
-
 with
     companies_dim as (select * from {{ ref("wh_companies_dim") }}),
     contacts_dim as (select * from {{ ref("wh_contacts_dim") }})

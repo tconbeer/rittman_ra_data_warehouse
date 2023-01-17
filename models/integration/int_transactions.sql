@@ -1,6 +1,5 @@
 {% if var("finance_warehouse_transaction_sources") %}
 
-
 with
     transactions_merge_list as (
         {% for source in var("finance_warehouse_transaction_sources") %}

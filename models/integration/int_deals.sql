@@ -1,6 +1,5 @@
 {% if var("marketing_warehouse_deal_sources") %}
 
-
 with
     t_deals_merge_list as (
         {% for source in var("marketing_warehouse_deal_sources") %}
@@ -18,6 +17,5 @@ select *
 from t_deals_merge_list
 
 {% else %} {{ config(enabled=false) }}
-
 
 {% endif %}

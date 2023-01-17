@@ -2,7 +2,6 @@
 
 {{ config(alias="plans_dim") }}
 
-
 with plans as (select * from {{ ref("int_plans") }})
 select generate_uuid() as plan_pk, p.*
 from plans p

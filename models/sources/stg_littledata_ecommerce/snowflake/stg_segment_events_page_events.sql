@@ -45,7 +45,6 @@ with
             end as device,
             '{{ var(' stg_segment_events_site ') }}' as site
 
-
         from source
 
     ),

@@ -36,7 +36,6 @@ with
             end as device,
             '{{ var(' stg_rudderstack_events_site ') }}' as site
 
-
         from source
 
     ),

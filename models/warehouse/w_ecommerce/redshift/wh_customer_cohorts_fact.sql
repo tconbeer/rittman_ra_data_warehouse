@@ -2,7 +2,6 @@
 
 {{ config(unique_key="customer_cohort_pk", alias="customer_cohorts_fact") }}
 
-
 with
     customer_cohorts as (select * from {{ ref("int_customer_cohorts") }} o),
     customers as (select * from {{ ref("wh_customers_dim") }} o)

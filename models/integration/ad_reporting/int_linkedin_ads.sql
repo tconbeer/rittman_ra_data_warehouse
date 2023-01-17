@@ -26,7 +26,6 @@ with
             coalesce(cost, 0) as spend
         from base
 
-
     )
 
 select *

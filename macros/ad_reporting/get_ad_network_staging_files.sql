@@ -30,7 +30,6 @@
 {% set _ = staging_file.append(ref("int_snapchat_ads")) %}
 {% endif %}
 
-
 {{ return(staging_file) }}
 
 {% endmacro %}

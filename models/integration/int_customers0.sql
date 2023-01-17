@@ -1,7 +1,6 @@
 {% if var("ecommerce_warehouse_customer_sources") %}
 {{ config(materialized="table") }}
 
-
 with
     customers_merge_list as (
         {% for source in var("ecommerce_warehouse_customer_sources") %}
@@ -29,8 +28,6 @@ select
     ) as contact_is_pro
 from customers_merge_list
 
-
 {% else %} {{ config(enabled=false) }}
-
 
 {% endif %}

@@ -2,7 +2,6 @@
 
 {{ config(unique_key="order_line_pk", alias="order_lines_fact") }}
 
-
 with
     order_lines as (select * from {{ ref("int_order_lines") }} o),
     products as (select * from {{ ref("wh_products_dim") }} p),

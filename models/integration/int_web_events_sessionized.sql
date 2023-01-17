@@ -59,7 +59,6 @@ with
 
     new_sessions as (
 
-
         select
             *,
             case
@@ -72,7 +71,6 @@ with
     ),
 
     session_numbers as (
-
 
         select
 
@@ -224,7 +222,6 @@ with
     )
 select *
 from ordered_conversion_tagged
-
 
 {% else %} {{ config(enabled=false) }}
 

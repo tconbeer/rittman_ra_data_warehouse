@@ -25,5 +25,4 @@ select *
 from ad_reporting
 {% else %} {{ config(enabled=false) }}
 
-
 {% endif %}

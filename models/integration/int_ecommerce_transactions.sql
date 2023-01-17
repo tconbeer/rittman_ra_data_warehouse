@@ -1,7 +1,6 @@
 {% if var("ecommerce_warehouse_transaction_sources") %}
 {{ config(materialized="table") }}
 
-
 with
     transactions_merge_list as (
         {% for source in var("ecommerce_warehouse_transaction_sources") %}

@@ -54,7 +54,6 @@ with
                 as {{ dbt_utils.type_string() }}
             ) as site
 
-
         from source
 
     ),

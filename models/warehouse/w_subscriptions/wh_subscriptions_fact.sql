@@ -1,7 +1,6 @@
 {% if var("subscriptions_warehouse_sources") %}
 {{ config(alias="subscriptions_fact") }}
 
-
 with
     subscriptions as (
         select {{ dbt_utils.star(from=ref("int_subscriptions")) }}
