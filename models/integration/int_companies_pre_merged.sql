@@ -1,4 +1,3 @@
-
 {% if var("crm_warehouse_company_sources") %}
 
 {{ config(materialized="table") }}
