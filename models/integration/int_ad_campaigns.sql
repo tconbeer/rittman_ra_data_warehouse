@@ -1,32 +1,23 @@
-{% if var('marketing_warehouse_ad_campaign_sources') %}
+{% if var("marketing_warehouse_ad_campaign_sources") %}
 
-with ad_reporting as
-  (
-SELECT
-  campaign_id     AS ad_campaign_id,
-  campaign_name   AS ad_campaign_name,
-  platform        AS ad_network,
-  account_name    AS ad_account_name,
-  account_id      AS ad_account_id,
-  utm_source      AS utm_source,
-  utm_medium      AS utm_medium,
-  utm_campaign    AS utm_campaign,
-  utm_content     AS utm_content,
-  utm_term        AS utm_term
-FROM
-  {{ ref('int_ad_reporting') }}
-GROUP BY
-  1,2,3,4,5,6,7,8,9,10
-)
+with
+    ad_reporting as (
+        select
+            campaign_id as ad_campaign_id,
+            campaign_name as ad_campaign_name,
+            platform as ad_network,
+            account_name as ad_account_name,
+            account_id as ad_account_id,
+            utm_source as utm_source,
+            utm_medium as utm_medium,
+            utm_campaign as utm_campaign,
+            utm_content as utm_content,
+            utm_term as utm_term
+        from {{ ref("int_ad_reporting") }}
+        group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+    )
 select *
 from ad_reporting
- {% else %}
+{% else %} {{ config(enabled=false) }}
 
- {{
-     config(
-         enabled=false
-     )
- }}
-
-
- {% endif %}
+{% endif %}
