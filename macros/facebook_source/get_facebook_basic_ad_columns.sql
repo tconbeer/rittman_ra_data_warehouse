@@ -16,6 +16,8 @@
     {"name": "inline_link_clicks", "datatype": dbt_utils.type_int()},
     {"name": "reach", "datatype": dbt_utils.type_int()},
     {"name": "spend", "datatype": dbt_utils.type_float()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

@@ -126,6 +126,8 @@
     {"name": "timezone_id", "datatype": dbt_utils.type_int()},
     {"name": "timezone_name", "datatype": dbt_utils.type_string()},
     {"name": "timezone_offset_hours_utc", "datatype": dbt_utils.type_float()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

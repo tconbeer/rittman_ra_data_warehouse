@@ -12,6 +12,8 @@
     {"name": "name", "datatype": dbt_utils.type_string()},
     {"name": "sequence_id", "datatype": dbt_utils.type_int()},
     {"name": "test_account", "datatype": "boolean"},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

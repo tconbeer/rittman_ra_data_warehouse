@@ -17,7 +17,9 @@ with
                     ),
                     staging_columns=get_google_ads_criteria_performance_columns(),
                 )
-            }} {% for metric in [] %}, {{ metric }} {% endfor %}
+            }}
+
+            {% for metric in [] %}, {{ metric }} {% endfor %}
 
         from source
 

@@ -1,6 +1,7 @@
 {% if not var("enable_mailchimp_email_source") or (
     not var("enable_marketing_warehouse")
-) %} {{ config(enabled=false) }}
+) %}
+{{ config(enabled=false) }}
 {% else %} {{ config(unique_key="list_pk", alias="email_lists_dim") }}
 {% endif %}
 

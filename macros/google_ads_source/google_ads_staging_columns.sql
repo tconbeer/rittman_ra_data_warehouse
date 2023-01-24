@@ -24,7 +24,9 @@
     },
     {"name": "external_customer_id", "datatype": dbt_utils.type_int()},
     {"name": "impressions", "datatype": dbt_utils.type_int()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}
 
@@ -49,7 +51,9 @@
     {"name": "date", "datatype": "date", "alias": "date_day"},
     {"name": "external_customer_id", "datatype": dbt_utils.type_int()},
     {"name": "gcl_id", "datatype": dbt_utils.type_string(), "alias": "gclid"},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}
 
@@ -78,6 +82,8 @@
     {"name": "external_customer_id", "datatype": dbt_utils.type_int()},
     {"name": "id", "datatype": dbt_utils.type_int()},
     {"name": "impressions", "datatype": dbt_utils.type_int()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

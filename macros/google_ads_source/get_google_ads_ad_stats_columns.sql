@@ -35,6 +35,8 @@
         "datatype": dbt_utils.type_string(),
     },
     {"name": "view_through_conversions", "datatype": dbt_utils.type_int()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

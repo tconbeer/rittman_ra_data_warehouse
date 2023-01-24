@@ -1,6 +1,7 @@
 {% if not var("enable_mailchimp_email_source") or (
     not var("enable_marketing_warehouse")
-) %} {{ config(enabled=false) }}
+) %}
+{{ config(enabled=false) }}
 {% else %} {{ config(alias="email_events_fact") }}
 {% endif %}
 

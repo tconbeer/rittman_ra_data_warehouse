@@ -21,6 +21,8 @@
     {"name": "status", "datatype": dbt_utils.type_string()},
     {"name": "stop_time", "datatype": dbt_utils.type_timestamp()},
     {"name": "updated_time", "datatype": dbt_utils.type_timestamp()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

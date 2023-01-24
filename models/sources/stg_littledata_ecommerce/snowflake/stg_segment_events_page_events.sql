@@ -40,7 +40,9 @@ with
                                 "' '",
                                 1,
                             )
-                        }}, ';', ''
+                        }},
+                        ';',
+                        ''
                     )
             end as device,
             '{{ var(' stg_segment_events_site ') }}' as site

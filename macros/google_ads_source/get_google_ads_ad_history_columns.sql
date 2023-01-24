@@ -31,6 +31,8 @@
     {"name": "tracking_url_template", "datatype": dbt_utils.type_string()},
     {"name": "updated_at", "datatype": dbt_utils.type_timestamp()},
     {"name": "url", "datatype": dbt_utils.type_string()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

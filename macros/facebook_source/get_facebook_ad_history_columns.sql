@@ -46,6 +46,8 @@
     },
     {"name": "status", "datatype": dbt_utils.type_string()},
     {"name": "updated_time", "datatype": dbt_utils.type_timestamp()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

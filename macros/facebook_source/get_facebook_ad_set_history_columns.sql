@@ -143,6 +143,8 @@
     {"name": "targeting_work_positions", "datatype": dbt_utils.type_string()},
     {"name": "updated_time", "datatype": dbt_utils.type_timestamp()},
     {"name": "use_new_app_click", "datatype": "boolean"},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

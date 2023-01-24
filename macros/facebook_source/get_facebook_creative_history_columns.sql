@@ -114,6 +114,8 @@
         "datatype": dbt_utils.type_string(),
     },
     {"name": "video_id", "datatype": dbt_utils.type_int()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}

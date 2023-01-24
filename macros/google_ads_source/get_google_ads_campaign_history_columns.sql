@@ -115,6 +115,8 @@
         "datatype": dbt_utils.type_string(),
     },
     {"name": "vanity_pharma_text", "datatype": dbt_utils.type_string()},
-] %} {{ return(columns) }}
+] %}
+
+{{ return(columns) }}
 
 {% endmacro %}
