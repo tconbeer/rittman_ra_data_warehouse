@@ -19,6 +19,8 @@ select
     o.* except (list_id, contact_id)
 from email_events o
 join contacts_dim c on o.contact_id in unnest(c.all_contact_ids)
--- LEFT JOIN email_lists_dim l
--- ON o.list_id = l.list_id
-left join ad_campaigns_dim k on o.ad_campaign_id = k.ad_campaign_id
+left join
+    ad_campaigns_dim k on o.ad_campaign_id = k.ad_campaign_id
+    -- LEFT JOIN email_lists_dim l
+    -- ON o.list_id = l.list_id
+    

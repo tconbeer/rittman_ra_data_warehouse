@@ -16,10 +16,12 @@ with
             row_number() over (partition by gclid order by date_day) as rn
         from base
 
-    -- we've heard that sometimes duplicates gclids are an issue. This dedupe ensures
-    -- no glcids are double counted.
     ),
-    filtered as (select * from fields where gclid is not null and rn = 1)
+    filtered as (  -- we've heard that sometimes duplicates gclids are an issue. This dedupe ensures no glcids are double counted.
+
+        select * from fields where gclid is not null and rn = 1
+
+    )
 
 select *
 from filtered

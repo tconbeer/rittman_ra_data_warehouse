@@ -1,6 +1,8 @@
 {% if var("product_warehouse_event_sources") %}
 
 with
+    events as (
+        select * from {{ ref("int_web_events") }}
     /*  {% if is_incremental() %}
     where visitor_id in (
         select distinct visitor_id
@@ -16,7 +18,7 @@ with
         )
     {% endif %}
 */
-    events as (select * from {{ ref("int_web_events") }}),
+    ),
 
     numbered as (
 
