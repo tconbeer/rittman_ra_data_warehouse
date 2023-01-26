@@ -1,32 +1,13 @@
-{% if var("subscriptions_warehouse_sources")  %}
-{{
-    config(
-        alias='plan_breakout_fact'
-    )
-}}
+{% if var("subscriptions_warehouse_sources") %}
+{{ config(alias="plan_breakout_fact") }}
 
+with
+    plans as (select * from {{ ref("wh_plans_dim") }}),
+    plan_breakouts as (select * from {{ ref("int_plan_breakout_metrics") }})
+select generate_uuid() as plan_breakout_pk, p.plan_pk, b.*
+from plan_breakouts b
+join plans p on b.plan_id = p.plan_id
 
-WITH plans AS
-  (
-  SELECT *
-  FROM   {{ ref('wh_plans_dim') }}
-),
-plan_breakouts as (
-  SELECT *
-  FROM   {{ ref('int_plan_breakout_metrics') }}
-  )
-SELECT
-   GENERATE_UUID() as plan_breakout_pk,
-   p.plan_pk,
-   b.*
-FROM
-   plan_breakouts b
-JOIN
-   plans p
-ON b.plan_id = p.plan_id
-
-{% else %}
-
-   {{config(enabled=false)}}
+{% else %} {{ config(enabled=false) }}
 
 {% endif %}
