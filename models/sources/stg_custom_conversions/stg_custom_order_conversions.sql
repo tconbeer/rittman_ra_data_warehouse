@@ -1,35 +1,37 @@
-{% if target.type == 'bigquery' or target.type == 'snowflake' or target.type == 'redshift' %}
-{% if var("order_conversion_sources") %}
-{% if 'custom' in var("order_conversion_sources") %}
+{% if target.type == "bigquery" or target.type == "snowflake" or target.type == "redshift" %}
+    {% if var("order_conversion_sources") %}
+        {% if "custom" in var("order_conversion_sources") %}
 
-with source as (
+            with
+                source as (
 
-  select * from {{ source('custom_conversions','conversion_orders') }}
+                    select *
+                    from {{ source("custom_conversions", "conversion_orders") }}
 
-),
-renamed as (
-  SELECT
-  ORDER_ID        as order_id,
-  CUSTOMER_ID     as user_id,
-  ORDER_TS        as order_ts,
-  SESSION_ID      as session_id,
-  CHECKOUT_ID     as checkout_id,
-  TOTAL_REVENUE   as total_revenue,
-  CURRENCY_CODE   as currency_code,
-  UTM_SOURCE      as utm_source,
-  UTM_MEDIUM      as utm_medium,
-  UTM_CAMPAIGN    as utm_campaign,
-  UTM_CONTENT     as utm_content,
-  UTM_TERM        as utm_term,
-  CHANNEL         as channel
-from
-  source
-)
-select
-  *
-from
-  renamed
+                ),
+                renamed as (
+                    select
+                        order_id as order_id,
+                        customer_id as user_id,
+                        order_ts as order_ts,
+                        session_id as session_id,
+                        checkout_id as checkout_id,
+                        total_revenue as total_revenue,
+                        currency_code as currency_code,
+                        utm_source as utm_source,
+                        utm_medium as utm_medium,
+                        utm_campaign as utm_campaign,
+                        utm_content as utm_content,
+                        utm_term as utm_term,
+                        channel as channel
+                    from source
+                )
+            select *
+            from renamed
 
-{% else %} {{config(enabled=false)}} {% endif %}
-{% else %} {{config(enabled=false)}} {% endif %}
-{% else %} {{config(enabled=false)}} {% endif %}
+        {% else %} {{ config(enabled=false) }}
+        {% endif %}
+    {% else %} {{ config(enabled=false) }}
+    {% endif %}
+{% else %} {{ config(enabled=false) }}
+{% endif %}

@@ -1,16 +1,17 @@
 {%- macro filter_stitch_relation(relation, unique_column) -%}
 
-SELECT
-  *
-FROM
-  (
-    SELECT
-      *,
-      MAX(_sdc_batched_at) OVER (PARTITION BY {{ unique_column }} ORDER BY _sdc_batched_at RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS max_sdc_batched_at
-    FROM
-      {{ relation }}
-  )
-WHERE
-  _sdc_batched_at = max_sdc_batched_at
+    select *
+    from
+        (
+            select
+                *,
+                max(_sdc_batched_at) over (
+                    partition by {{ unique_column }}
+                    order by _sdc_batched_at
+                    range between unbounded preceding and unbounded following
+                ) as max_sdc_batched_at
+            from {{ relation }}
+        )
+    where _sdc_batched_at = max_sdc_batched_at
 
 {%- endmacro -%}
