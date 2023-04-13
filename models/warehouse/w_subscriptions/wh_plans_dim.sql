@@ -1,26 +1,11 @@
-{% if var("subscriptions_warehouse_sources")  %}
+{% if var("subscriptions_warehouse_sources") %}
 
-{{
-    config(
-        alias='plans_dim'
-    )
-}}
+    {{ config(alias="plans_dim") }}
 
+    with plans as (select * from {{ ref("int_plans") }})
+    select generate_uuid() as plan_pk, p.*
+    from plans p
 
-with plans as
-  (
-    SELECT *
-    FROM {{ ref('int_plans') }}
-  )
-SELECT
+{% else %} {{ config(enabled=false) }}
 
-    GENERATE_UUID() as plan_pk,
-    p.*
-FROM
-   plans p
-
-   {% else %}
-
-      {{config(enabled=false)}}
-
-   {% endif %}
+{% endif %}
