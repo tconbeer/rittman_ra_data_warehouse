@@ -1,29 +1,33 @@
 {% if target.type == "snowflake" %}
-{% if var("marketing_warehouse_ad_sources") %}
-{% if "facebook_ads" in var("marketing_warehouse_ad_sources") %}
+    {% if var("marketing_warehouse_ad_sources") %}
+        {% if "facebook_ads" in var("marketing_warehouse_ad_sources") %}
 
-with
-    base as (select * from {{ ref("int__facebook_ads__carousel_media_prep") }}),
-    unnested as (
+            with
+                base as (
 
-        select
+                    select * from {{ ref("int__facebook_ads__carousel_media_prep") }}
 
-            base._fivetran_id,
-            base.creative_id,
-            base.index,
-            url_tags.value:key::string as key,
-            url_tags.value:value::string as value
+                ),
+                unnested as (
 
-        from base, lateral flatten(input => url_tags) as url_tags
+                    select
 
-    )
+                        base._fivetran_id,
+                        base.creative_id,
+                        base.index,
+                        url_tags.value:key::string as key,
+                        url_tags.value:value::string as value
 
-select *
-from unnested
+                    from base, lateral flatten(input => url_tags) as url_tags
 
-{% else %} {{ config(enabled=false) }}
-{% endif %}
-{% else %} {{ config(enabled=false) }}
-{% endif %}
+                )
+
+            select *
+            from unnested
+
+        {% else %} {{ config(enabled=false) }}
+        {% endif %}
+    {% else %} {{ config(enabled=false) }}
+    {% endif %}
 {% else %} {{ config(enabled=false) }}
 {% endif %}

@@ -1,38 +1,44 @@
 {% if target.type == "bigquery" or target.type == "snowflake" or target.type == "redshift" %}
-{% if var("marketing_warehouse_ad_sources") %}
-{% if "google_ads" in var("marketing_warehouse_ad_sources") %}
-{% if var("google_ads_api_source") == "adwords" %}
+    {% if var("marketing_warehouse_ad_sources") %}
+        {% if "google_ads" in var("marketing_warehouse_ad_sources") %}
+            {% if var("google_ads_api_source") == "adwords" %}
 
-with
-    source as (select * from {{ source("adwords", "criteria_performance") }}),
+                with
+                    source as (
 
-    renamed as (
+                        select * from {{ source("adwords", "criteria_performance") }}
 
-        select
-
-            {{
-                fivetran_utils.fill_staging_columns(
-                    source_columns=adapter.get_columns_in_relation(
-                        ref("stg_google_ads__criteria_performance_tmp")
                     ),
-                    staging_columns=get_google_ads_criteria_performance_columns(),
-                )
-            }}
 
-            {% for metric in [] %}, {{ metric }} {% endfor %}
+                    renamed as (
 
-        from source
+                        select
 
-    )
+                            {{
+                                fivetran_utils.fill_staging_columns(
+                                    source_columns=adapter.get_columns_in_relation(
+                                        ref(
+                                            "stg_google_ads__criteria_performance_tmp"
+                                        )
+                                    ),
+                                    staging_columns=get_google_ads_criteria_performance_columns(),
+                                )
+                            }}
 
-select *
-from renamed
+                            {% for metric in [] %}, {{ metric }} {% endfor %}
 
-{% else %} {{ config(enabled=false) }}
-{% endif %}
-{% else %} {{ config(enabled=false) }}
-{% endif %}
-{% else %} {{ config(enabled=false) }}
-{% endif %}
+                        from source
+
+                    )
+
+                select *
+                from renamed
+
+            {% else %} {{ config(enabled=false) }}
+            {% endif %}
+        {% else %} {{ config(enabled=false) }}
+        {% endif %}
+    {% else %} {{ config(enabled=false) }}
+    {% endif %}
 {% else %} {{ config(enabled=false) }}
 {% endif %}

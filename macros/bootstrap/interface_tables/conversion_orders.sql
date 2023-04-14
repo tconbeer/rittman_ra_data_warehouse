@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS {{ target.database }}.{{ target.schema }}_staging.con
   CHANNEL                STRING,
   LAST_UPDATED_AT_TS     TIMESTAMP
 )
-;
+    ;
 {% endmacro %}
