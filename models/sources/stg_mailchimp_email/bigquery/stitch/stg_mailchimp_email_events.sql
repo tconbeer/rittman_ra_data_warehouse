@@ -18,8 +18,8 @@
                                     action,
                                     type,
                                     email_address
-                                order by
-                                    _sdc_batched_at range
+                                order by _sdc_batched_at
+                                range
                                     between unbounded preceding and unbounded following
                             ) as max_sdc_batched_at
                         from {{ source("stitch_mailchimp_email", "email_activity") }}

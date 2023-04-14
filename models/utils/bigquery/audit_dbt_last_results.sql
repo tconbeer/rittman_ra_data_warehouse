@@ -20,8 +20,8 @@ from
             ) as pct_diff_from_previous_load_ts,
             max(load_ts) over (
                 partition by object
-                order by
-                    load_ts range between unbounded preceding and unbounded following
+                order by load_ts
+                range between unbounded preceding and unbounded following
             ) as max_load_ts
         from
             {{ target.project }}.{{ generate_prefixed_target_name() }}_logs.audit_dbt_results

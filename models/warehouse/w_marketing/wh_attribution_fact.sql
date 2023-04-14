@@ -722,8 +722,9 @@
                                         partition by
                                             blended_user_id, user_conversion_cycle
                                         order by session_start_ts
-                                        rows between
-                                            unbounded preceding and unbounded following
+                                        rows
+                                            between unbounded preceding
+                                            and unbounded following
                                     )
                                     {% if var(
                                         "attribution_include_conversion_session"

@@ -54,15 +54,13 @@
         timesheet_billing_date,
         min(timesheet_billing_date) over (
             partition by c.company_pk
-            order by
-                timesheet_billing_date range
-                between unbounded preceding and unbounded following
+            order by timesheet_billing_date
+            range between unbounded preceding and unbounded following
         ) as first_company_timesheet_billing_date,
         max(timesheet_billing_date) over (
             partition by c.company_pk
-            order by
-                timesheet_billing_date range
-                between unbounded preceding and unbounded following
+            order by timesheet_billing_date
+            range between unbounded preceding and unbounded following
         ) as last_company_timesheet_billing_date,
         timesheet_hours_billed,
         timesheet_total_amount_billed,
