@@ -23,4 +23,3 @@ left join
     ad_campaigns_dim k on o.ad_campaign_id = k.ad_campaign_id
     -- LEFT JOIN email_lists_dim l
     -- ON o.list_id = l.list_id
-    
